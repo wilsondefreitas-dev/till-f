@@ -9,7 +9,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write ."
   },
   "lint-staged": {
     "*/*.jsx": "npx eslint --no-error-on-unmatched-pattern --fix --ext */*jsx"
