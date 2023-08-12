@@ -1,9 +1,9 @@
 export default function Home() {
 
-    return (
+  return (
 
-        <h1>🚧 Staging também em construção...</h1>
+    <h1>🚧 Staging também em construção...</h1>
 
-    );
+  );
 
 }
