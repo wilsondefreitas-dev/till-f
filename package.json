@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "next": "^13.4.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "name": "till-f",
+  "description": "Till-F is a system to manage workout plan, to record data and measure progress.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev"
+  },
+  "lint-staged": {
+    "*/*.jsx": "npx eslint --no-error-on-unmatched-pattern --fix --ext */*jsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilsondefreitas-dev/till-f.git"
+  },
+  "author": "wilson de freitas jr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wilsondefreitas-dev/till-f/issues"
+  },
+  "homepage": "https://github.com/wilsondefreitas-dev/till-f#readme",
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "eslint-plugin-react": "^7.33.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.1"
+  }
+}
