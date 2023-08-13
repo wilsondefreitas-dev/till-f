@@ -135,11 +135,21 @@ export function BasicCard() {
                 </small>
               </Typography>
             </Stack>
+          </Stack>
 
-            {/* <Stack direction="row" spacing={0.5} alignItems="center">
-              <ArrowDownwardIcon fontSize="1" color="error" />
-              <Typography sx={{ fontSize: 14 }}>-</Typography>
-            </Stack> */}
+          <Stack>
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <Typography sx={{ fontSize: 14, color: "#4e4e4e" }}>
+                <b>Observação:</b>
+              </Typography>
+            </Stack>
+
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <Typography sx={{ fontSize: 14 }}>
+                Dor no ombro esquerdo durante o Peck Deck.
+                {/* <small>Senti dor no omrbo esquerdo durante o Peck Deck</small> */}
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
       </CardContent>
