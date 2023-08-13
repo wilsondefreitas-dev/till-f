@@ -10,9 +10,9 @@ export default function Feed() {
       <Button className={styles.buttonToTrain} variant="contained">
         Novo Treino
       </Button>
-      <Typography align="center" variant="subtitle1" color={"#666"}>
-        histórico de treinos
-      </Typography>
+      <Divider>
+        <Chip size="small" label="HISTÓRICO DE TREINOS" />
+      </Divider>
       <div className={styles.historic}>
         <BasicCard />
         <BasicCard />
@@ -59,54 +59,94 @@ export function BasicCard() {
               color="text.secondary"
               gutterBottom
             >
-              Aramaçan | 22.08.23 | 10h15 ~ 12h00
+              <b>wilsondef | </b>Aramaçan • 22.08.23 • 01:40
             </Typography>
           </Stack>
 
-          <Typography variant="h5" component="div">
-            Treino A - Peito e Ombro
+          <Typography variant="h6" component="div">
+            Treino A - Peito, ombro e tríceps
           </Typography>
 
           <Stack direction="row" spacing={0.5}>
             <Chip label="Dieta: 100%" color="primary" size="small" />
             <Chip label="Sono: 70%" color="warning" size="small" />
+            <Chip
+              label="Satisfação: 😃 😃 🫥"
+              variant="outlined"
+              size="small"
+            />
           </Stack>
 
           <Stack>
             <Stack direction="row" spacing={0.5} alignItems="center">
+              <Typography sx={{ fontSize: 14, color: "#4e4e4e" }}>
+                <b>Carga:</b>
+              </Typography>
+            </Stack>
+
+            <Stack direction="row" spacing={0.5} alignItems="center">
               <ArrowUpwardIcon fontSize="1" color="success" />
               <Typography sx={{ fontSize: 14 }}>
-                Progrediu Carga: Supino Inclinado c/ Halteres + 2
+                Supino Inclinado com Halteres{" "}
+                <small>
+                  - <b style={{ color: "#4e4e4e" }}>S:3</b> (17,5 &gt;{" "}
+                  <b style={{ color: "green" }}>18 kg</b>)
+                </small>
+              </Typography>
+            </Stack>
+
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              <ArrowUpwardIcon fontSize="1" color="success" />
+              <Typography sx={{ fontSize: 14 }}>
+                Peck Deck{" "}
+                <small>
+                  - <b style={{ color: "#4e4e4e" }}>S:2</b> (50 &gt;{" "}
+                  <b style={{ color: "green" }}>55 kg</b>)
+                </small>
               </Typography>
             </Stack>
 
             <Stack direction="row" spacing={0.5} alignItems="center">
               <ArrowDownwardIcon fontSize="1" color="error" />
               <Typography sx={{ fontSize: 14 }}>
-                Reduziu Carga: Desenvolvimento
+                Desenvolvimento{" "}
+                <small>
+                  - <b style={{ color: "#4e4e4e" }}>S:3</b> (10 &gt;{" "}
+                  <b style={{ color: "red" }}>8 kg</b>)
+                </small>
               </Typography>
             </Stack>
           </Stack>
 
           <Stack>
             <Stack direction="row" spacing={0.5} alignItems="center">
-              <ArrowUpwardIcon fontSize="1" color="success" />
-              <Typography sx={{ fontSize: 14 }}>
-                Progrediu Reps.: Crucifixo Inclinado com Halteres + 1
+              <Typography sx={{ fontSize: 14, color: "#4e4e4e" }}>
+                <b>Repetição:</b>
               </Typography>
             </Stack>
 
             <Stack direction="row" spacing={0.5} alignItems="center">
-              <ArrowDownwardIcon fontSize="1" color="error" />
-              <Typography sx={{ fontSize: 14 }}>Reduziu Reps.: -</Typography>
+              <ArrowUpwardIcon fontSize="1" color="success" />
+              <Typography sx={{ fontSize: 14 }}>
+                Crucifixo Inclinado com Halteres{" "}
+                <small>
+                  - <b style={{ color: "#4e4e4e" }}>S:3</b> (10 &gt;{" "}
+                  <b style={{ color: "green" }}>12</b>)
+                </small>
+              </Typography>
             </Stack>
+
+            {/* <Stack direction="row" spacing={0.5} alignItems="center">
+              <ArrowDownwardIcon fontSize="1" color="error" />
+              <Typography sx={{ fontSize: 14 }}>-</Typography>
+            </Stack> */}
           </Stack>
         </Stack>
       </CardContent>
 
       <Divider />
 
-      <CardActions>
+      <CardActions sx={{ justifyContent: "flex-end" }}>
         <Button size="small">Detalhes</Button>
       </CardActions>
     </Card>
