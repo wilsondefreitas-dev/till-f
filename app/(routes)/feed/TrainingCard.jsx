@@ -114,7 +114,7 @@ const CardHeader = styled(Typography)(({ theme }) => ({
 }));
 
 const CardChip = styled(Chip)(() => ({
-  fontSize: 11,
+  fontSize: 12,
 }));
 
 const CardInfoTitle = styled(Typography)(() => ({
