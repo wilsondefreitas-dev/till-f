@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Fab from "@mui/material/Fab";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import AddIcon from "@mui/icons-material/Add";
 import Container from "@mui/material/Container";
 import { styled } from "@mui/material/styles";
@@ -44,9 +43,7 @@ export default function Feed() {
       <FixedFab ref={fabToTrain} color="primary" aria-label="add">
         <AddIcon />
       </FixedFab>
-      <Divider>
-        <Chip size="small" label="HISTÓRICO DE TREINOS" />
-      </Divider>
+      <Chip size="large" label="HISTÓRICO" />
       <HistoricContainer>
         <TrainingCard />
         <TrainingCard />
