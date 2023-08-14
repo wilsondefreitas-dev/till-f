@@ -1,15 +1,62 @@
+"use client";
+
 import styles from "./styles.module.css";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Feed() {
+  const feedContainer = useRef(null);
+  const buttonToTrain = useRef(null);
+  const fabToTrain = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === "object" && typeof document === "object") {
+      showFabOnScroll();
+    }
+  }, []);
+
+  function showFabOnScroll() {
+    const feedPaddingTopSize = parseInt(
+      window
+        .getComputedStyle(feedContainer.current)
+        .getPropertyValue("padding-top"),
+    );
+
+    const buttonHeight = buttonToTrain.current.offsetHeight;
+
+    (document.onscroll = () => {
+      const shoFab = window.scrollY >= feedPaddingTopSize + buttonHeight;
+      fabToTrain.current.style.opacity = Number(shoFab);
+    })();
+  }
+
   return (
-    <Container maxWidth="sm" className={styles.feed}>
-      <Button className={styles.buttonToTrain} variant="contained">
+    <Container ref={feedContainer} maxWidth="sm" className={styles.feed}>
+      <Button
+        ref={buttonToTrain}
+        className={styles.buttonToTrain}
+        variant="contained"
+      >
         Novo Treino
       </Button>
+      <Fab
+        ref={fabToTrain}
+        color="primary"
+        sx={{
+          position: "fixed",
+          bottom: "24px",
+          right: "24px",
+          opacity: "0",
+          transition: "opacity 0.25s",
+        }}
+        aria-label="add"
+      >
+        <AddIcon />
+      </Fab>
       <Divider>
         <Chip size="small" label="HISTÓRICO DE TREINOS" />
       </Divider>
@@ -36,6 +83,7 @@ import Avatar from "@mui/material/Avatar";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { red } from "@mui/material/colors";
+import { useEffect, useRef } from "react";
 
 export function BasicCard() {
   return (
@@ -147,7 +195,6 @@ export function BasicCard() {
             <Stack direction="row" spacing={0.5} alignItems="center">
               <Typography sx={{ fontSize: 14 }}>
                 Dor no ombro esquerdo durante o Peck Deck.
-                {/* <small>Senti dor no omrbo esquerdo durante o Peck Deck</small> */}
               </Typography>
             </Stack>
           </Stack>
