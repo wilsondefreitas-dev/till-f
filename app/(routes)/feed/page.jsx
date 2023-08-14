@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import Fab from "@mui/material/Fab";
-import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import TrainingCard from "./TrainingCard";
 
@@ -30,8 +30,8 @@ export default function Feed() {
     const buttonHeight = buttonToTrain.current.offsetHeight;
 
     (document.onscroll = () => {
-      const shoFab = window.scrollY >= feedPaddingTopSize + buttonHeight;
-      fabToTrain.current.style.opacity = Number(shoFab);
+      const showFab = window.scrollY >= feedPaddingTopSize + buttonHeight;
+      fabToTrain.current.style.opacity = Number(showFab);
     })();
   }
 
@@ -40,16 +40,17 @@ export default function Feed() {
       <LongButton ref={buttonToTrain} variant="contained">
         Novo Treino
       </LongButton>
-      <FixedFab ref={fabToTrain} color="primary" aria-label="add">
+
+      <FixedFab ref={fabToTrain} color="primary">
         <AddIcon />
       </FixedFab>
-      <Chip size="large" label="HISTÓRICO" />
+
+      <FeedHeader>histórico</FeedHeader>
+
       <HistoricContainer>
-        <TrainingCard />
-        <TrainingCard />
-        <TrainingCard />
-        <TrainingCard />
-        <TrainingCard />
+        {Array.from(Array(6), (data) => (
+          <TrainingCard key={data} />
+        ))}
       </HistoricContainer>
     </FeedContainer>
   );
@@ -64,6 +65,14 @@ const FeedContainer = styled(Container)(() => ({
   minHeight: "100vh",
   backgroundColor: "gainsboro",
   boxShadow: "0px 0px 20px -1px rgba(0, 0, 0, 0.4)",
+}));
+
+const FeedHeader = styled(Typography)(() => ({
+  textAlign: "center",
+  backgroundColor: "rgba(0,0,0,0.05)",
+  color: "dimgray",
+  textTransform: "uppercase",
+  fontSize: 14,
 }));
 
 const FixedFab = styled(Fab)(() => ({

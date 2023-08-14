@@ -12,45 +12,11 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
-const CardAvatar = styled(Avatar)(() => ({
-  width: 20,
-  height: 20,
-  fontSize: 12,
-  backgroundColor: red[500],
-}));
-
-const CardHeader = styled(Typography)(({ theme }) => ({
-  fontSize: 12,
-  color: theme.palette.text.secondary,
-}));
-
-const CardInfoTitle = styled(Typography)(() => ({
-  fontSize: 14,
-  fontWeight: "bold",
-  color: "#4e4e4e",
-}));
-
-const CardInfo = styled(Typography)(() => ({
-  fontSize: 14,
-}));
-
-const CardSmallInfo = styled("small", {
-  shouldForwardProp: (prop) => prop !== "progressed",
-})(({ progressed }) => ({
-  color: "gray",
-  "& b": {
-    color: "#4e4e4e",
-  },
-  "& b:last-child": {
-    color: progressed ? "green" : "red",
-  },
-}));
-
 export default function TrainingCard() {
   return (
     <>
       <Divider>
-        <CardHeader>01 de agosto, 10:15</CardHeader>
+        <CardHeader>01 de agosto</CardHeader>
       </Divider>
       <Card>
         <CardContent>
@@ -58,18 +24,20 @@ export default function TrainingCard() {
             <Stack direction="row" spacing={0.5} alignItems="center">
               <CardAvatar>W</CardAvatar>
               <CardHeader>
-                <b>wilsondef</b>
+                <b>wilsondef | </b> 10:23
               </CardHeader>
             </Stack>
 
-            <Typography variant="h6">
-              Treino A - Peito, ombro e tríceps
-            </Typography>
+            <Stack>
+              <Typography variant="h6">
+                Treino A - Peito, ombro e tríceps
+              </Typography>
 
-            <Stack direction="row" spacing={0.5}>
-              <Chip label="Duração: 01h42" color="info" size="small" />
-              <Chip label="Dieta: 100%" color="success" size="small" />
-              <Chip label="Sono: 70%" color="warning" size="small" />
+              <Stack direction="row" spacing={0.5}>
+                <CardChip label="Duração: 01h42" color="info" size="small" />
+                <CardChip label="Dieta: 100%" color="success" size="small" />
+                <CardChip label="Sono: 70%" color="warning" size="small" />
+              </Stack>
             </Stack>
 
             <Stack>
@@ -126,9 +94,47 @@ export default function TrainingCard() {
         <Divider />
 
         <CardActions>
-          <Button size="small">Detalhes</Button>
+          <Button size="small">ver detalhes</Button>
         </CardActions>
       </Card>
     </>
   );
 }
+
+const CardAvatar = styled(Avatar)(() => ({
+  width: 20,
+  height: 20,
+  fontSize: 12,
+  backgroundColor: red[500],
+}));
+
+const CardHeader = styled(Typography)(({ theme }) => ({
+  fontSize: 12,
+  color: theme.palette.text.secondary,
+}));
+
+const CardChip = styled(Chip)(() => ({
+  fontSize: 11,
+}));
+
+const CardInfoTitle = styled(Typography)(() => ({
+  fontSize: 14,
+  fontWeight: "bold",
+  color: "#4e4e4e",
+}));
+
+const CardInfo = styled(Typography)(() => ({
+  fontSize: 14,
+}));
+
+const CardSmallInfo = styled("small", {
+  shouldForwardProp: (prop) => prop !== "progressed",
+})(({ progressed }) => ({
+  color: "gray",
+  "& b": {
+    color: "#4e4e4e",
+  },
+  "& b:last-child": {
+    color: progressed ? "green" : "red",
+  },
+}));
