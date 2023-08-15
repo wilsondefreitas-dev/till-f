@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -13,6 +14,8 @@ import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 export default function TrainingCard() {
+  const router = useRouter();
+
   return (
     <>
       <Divider>
@@ -94,7 +97,9 @@ export default function TrainingCard() {
         <Divider />
 
         <CardActions>
-          <Button size="small">ver detalhes</Button>
+          <Button size="small" onClick={() => router.push("/details/test")}>
+            ver detalhes
+          </Button>
         </CardActions>
       </Card>
     </>
