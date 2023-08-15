@@ -14,7 +14,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write ."
   },
