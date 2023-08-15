@@ -19,7 +19,7 @@
     "lint:fix": "prettier --write ."
   },
   "lint-staged": {
-    "*/*.jsx": "npx eslint --no-error-on-unmatched-pattern --fix --ext */*jsx"
+    "./app/**/*.jsx": "npx eslint --no-error-on-unmatched-pattern --fix"
   },
   "repository": {
     "type": "git",

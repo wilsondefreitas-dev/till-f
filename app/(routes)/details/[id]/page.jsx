@@ -3,6 +3,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import RepeatIcon from "@mui/icons-material/Repeat";
+import Container from "@mui/material/Container";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -10,8 +11,9 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export default function Page({ params }) {
   const { id } = params;
+  console.log(id);
   return (
-    <Container>
+    <MainContainer maxWidth="sm">
       <Stack>
         <Typography>Treino A - Peito, ombros e tríceps</Typography>
         <Typography>
@@ -132,12 +134,16 @@ export default function Page({ params }) {
           <FitnessCenterIcon /> 8 Kg
         </Typography>
       </Stack>
-    </Container>
+    </MainContainer>
   );
 }
 
-const Container = styled("div")(() => ({
+const MainContainer = styled(Container)(() => ({
   display: "flex",
   flexDirection: "column",
-  gap: 10,
+  gap: 18,
+  paddingBottom: 24,
+  minHeight: "100vh",
+  backgroundColor: "gainsboro",
+  boxShadow: "0px 0px 20px -1px rgba(0, 0, 0, 0.4)",
 }));
