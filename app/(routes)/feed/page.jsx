@@ -9,7 +9,7 @@ export default function Feed() {
   return (
     <MainContainer maxWidth="sm">
       <NewTrainingButton />
-      <FeedHeader>histórico</FeedHeader>
+      <Header>histórico</Header>
 
       <HistoricContainer>
         {Array.from(Array(6), (data) => (
@@ -37,10 +37,12 @@ const HistoricContainer = styled("div")(() => ({
   width: "100",
 }));
 
-const FeedHeader = styled(Typography)(() => ({
+const Header = styled(Typography)(() => ({
   textAlign: "center",
-  backgroundColor: "rgba(0,0,0,0.05)",
   color: "dimgray",
   textTransform: "uppercase",
-  fontSize: 14,
+  fontSize: 16,
+  borderBottom: "solid 1px rgba(0, 0, 0, 0.3)",
+  borderTop: "solid 1px rgba(0, 0, 0, 0.3)",
+  padding: 5,
 }));

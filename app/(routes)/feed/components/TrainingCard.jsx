@@ -19,7 +19,7 @@ export default function TrainingCard() {
   return (
     <>
       <Divider>
-        <CardHeader>01 de agosto</CardHeader>
+        <CardHeader>01 de agosto, quarta</CardHeader>
       </Divider>
       <Card>
         <CardContent>
