@@ -9,43 +9,46 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Divider from "@mui/material/Divider";
 import InfoIcon from "@mui/icons-material/Info";
+import MenuAppBar from "../../../_components/MenuAppBar";
 
 export default function Page({ params }) {
   const { id } = params;
   console.log(id);
   return (
-    <MainContainer maxWidth="sm">
-      <Header>detalhes</Header>
+    <>
+      <MenuAppBar />
+      <MainContainer maxWidth="sm">
+        <Header>detalhes</Header>
 
-      <Stack spacing={1}>
-        <Stack>
-          <HeaderInfo>01 de agosto, quarta | 10:23 → 11h55</HeaderInfo>
-          <TrainingTitle variant="h6">
-            33° - Treino A - Peito, ombro e tríceps
-          </TrainingTitle>
+        <Stack spacing={1}>
+          <Stack>
+            <HeaderInfo>01 de agosto, quarta | 10:23 → 11h55</HeaderInfo>
+            <TrainingTitle variant="h6">
+              33° - Treino A - Peito, ombro e tríceps
+            </TrainingTitle>
+          </Stack>
+
+          <Stack direction="row" spacing={0.5} justifyContent={"center"}>
+            <Chip label="01h42 de duração" color="info" size="small" />
+            <Chip label="6 de 6 refeições" color="success" size="small" />
+            <Chip label="7 de 8 horas de sono" color="warning" size="small" />
+          </Stack>
+
+          <Observation>
+            <InfoIcon fontSize={"1"} />
+            Dor no ombro esquerdo durante o Peck Deck.
+          </Observation>
         </Stack>
 
-        <Stack direction="row" spacing={0.5} justifyContent={"center"}>
-          <Chip label="01h42 de duração" color="info" size="small" />
-          <Chip label="6 de 6 refeições" color="success" size="small" />
-          <Chip label="7 de 8 horas de sono" color="warning" size="small" />
-        </Stack>
+        <DenseTable />
+        <DenseTable />
+        <DenseTable />
+        <DenseTable />
+        <DenseTable />
+        <DenseTable />
+        <DenseTable />
 
-        <Observation>
-          <InfoIcon fontSize={"1"} />
-          Dor no ombro esquerdo durante o Peck Deck.
-        </Observation>
-      </Stack>
-
-      <DenseTable />
-      <DenseTable />
-      <DenseTable />
-      <DenseTable />
-      <DenseTable />
-      <DenseTable />
-      <DenseTable />
-
-      {/* <Stack>
+        {/* <Stack>
         <Typography>
           Aquecimento | Manguito Rotador - <RepeatIcon fontSize="1" />
           20
@@ -164,7 +167,8 @@ export default function Page({ params }) {
           <FitnessCenterIcon /> 8 Kg
         </Typography>
       </Stack> */}
-    </MainContainer>
+      </MainContainer>
+    </>
   );
 }
 

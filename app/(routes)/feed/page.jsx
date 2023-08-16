@@ -4,19 +4,23 @@ import Typography from "@mui/material/Typography";
 import TrainingCard from "./components/TrainingCard";
 import Container from "@mui/material/Container";
 import NewTrainingButton from "./components/NewTrainingButton";
+import MenuAppBar from "../../_components/MenuAppBar";
 
 export default function Feed() {
   return (
-    <MainContainer maxWidth="sm">
-      <NewTrainingButton />
-      <Header>histórico</Header>
+    <>
+      <MenuAppBar showBackButton={false} />
+      <MainContainer maxWidth="sm">
+        <NewTrainingButton />
+        <Header>histórico</Header>
 
-      <HistoricContainer>
-        {Array.from(Array(6), (data) => (
-          <TrainingCard key={data} />
-        ))}
-      </HistoricContainer>
-    </MainContainer>
+        <HistoricContainer>
+          {Array.from(Array(6), (data) => (
+            <TrainingCard key={data} />
+          ))}
+        </HistoricContainer>
+      </MainContainer>
+    </>
   );
 }
 
