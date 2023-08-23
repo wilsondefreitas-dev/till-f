@@ -24,7 +24,7 @@ export default function MenuAppBar({ showBackButton = true }) {
 
   return (
     <AppBar position="sticky">
-      <Toolbar>
+      <Toolbar variant="dense">
         <IconButton
           size="large"
           edge="start"
