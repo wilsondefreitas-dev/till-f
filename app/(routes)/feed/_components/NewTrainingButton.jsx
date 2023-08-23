@@ -12,6 +12,10 @@ export default function NewTrainingButton() {
     if (typeof window === "object" && typeof document === "object") {
       showFabOnScroll();
     }
+
+    return () => {
+      document.onscroll = null;
+    };
   }, []);
 
   function showFabOnScroll() {

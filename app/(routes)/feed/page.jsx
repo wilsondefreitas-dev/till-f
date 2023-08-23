@@ -1,9 +1,9 @@
 "use client";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import TrainingCard from "./components/TrainingCard";
+import TrainingCard from "./_components/TrainingCard";
 import Container from "@mui/material/Container";
-import NewTrainingButton from "./components/NewTrainingButton";
+import NewTrainingButton from "./_components/NewTrainingButton";
 import MenuAppBar from "../../_components/MenuAppBar";
 
 export default function Feed() {
@@ -15,7 +15,7 @@ export default function Feed() {
         <Header>histórico</Header>
 
         <HistoricContainer>
-          {Array.from(Array(6), (data) => (
+          {Array.from([1, 2, 3, 4, 5, 6], (data) => (
             <TrainingCard key={data} />
           ))}
         </HistoricContainer>
