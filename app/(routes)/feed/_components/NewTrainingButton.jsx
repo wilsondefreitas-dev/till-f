@@ -3,10 +3,12 @@ import Fab from "@mui/material/Fab";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { styled } from "@mui/material/styles";
+import { useRouter } from "next/navigation";
 
 export default function NewTrainingButton() {
   const buttonToTrain = useRef(null);
   const fabToTrain = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window === "object" && typeof document === "object") {
@@ -33,13 +35,21 @@ export default function NewTrainingButton() {
     })();
   }
 
+  function handleOnClick() {
+    router.push("/training/new");
+  }
+
   return (
     <>
-      <LongButton ref={buttonToTrain} variant="contained">
+      <LongButton
+        ref={buttonToTrain}
+        variant="contained"
+        onClick={handleOnClick}
+      >
         Novo Treino
       </LongButton>
 
-      <FixedFab ref={fabToTrain} color="primary">
+      <FixedFab ref={fabToTrain} color="primary" onClick={handleOnClick}>
         <AddIcon />
       </FixedFab>
     </>

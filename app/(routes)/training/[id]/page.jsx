@@ -7,7 +7,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import MenuAppBar from "../../../_components/MenuAppBar";
 import { useEffect } from "react";
 import Stack from "@mui/material/Stack";
-import ExerciseTable from "../_components/ExerciseTable";
+import ExerciseTable from "./_components/ExerciseTable";
 
 export default function Page({ params }) {
   const { id } = params;

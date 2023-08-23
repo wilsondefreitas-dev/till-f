@@ -97,7 +97,7 @@ export default function TrainingCard() {
         <Divider />
 
         <CardActions>
-          <Button size="small" onClick={() => router.push("/details/test")}>
+          <Button size="small" onClick={() => router.push("/training/test")}>
             ver detalhes
           </Button>
         </CardActions>
