@@ -5,7 +5,7 @@ export default function NewTraining() {
   return (
     <>
       <MenuAppBar showBackButton={true} />
-      <h1>New Training Page</h1>;
+      <h1>Start New Workout Page</h1>
     </>
   );
 }

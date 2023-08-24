@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Fab from "@mui/material/Fab";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { styled } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
 
@@ -36,7 +36,7 @@ export default function NewTrainingButton() {
   }
 
   function handleOnClick() {
-    router.push("/training/new");
+    router.push("/training/workout");
   }
 
   return (
@@ -46,11 +46,11 @@ export default function NewTrainingButton() {
         variant="contained"
         onClick={handleOnClick}
       >
-        Novo Treino
+        Treinar
       </LongButton>
 
       <FixedFab ref={fabToTrain} color="primary" onClick={handleOnClick}>
-        <AddIcon />
+        <FitnessCenterIcon />
       </FixedFab>
     </>
   );
