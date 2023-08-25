@@ -2,35 +2,22 @@
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import TrainingCard from "./_components/TrainingCard";
-import Container from "@mui/material/Container";
 import NewTrainingButton from "./_components/NewTrainingButton";
 
 export default function Feed() {
   return (
     <>
-      <MainContainer maxWidth="sm">
-        <NewTrainingButton />
-        <Header>histórico</Header>
+      <NewTrainingButton />
+      <Header>histórico</Header>
 
-        <HistoricContainer>
-          {Array.from([1, 2, 3, 4, 5, 6], (data) => (
-            <TrainingCard key={data} />
-          ))}
-        </HistoricContainer>
-      </MainContainer>
+      <HistoricContainer>
+        {Array.from([1, 2, 3, 4, 5, 6], (data) => (
+          <TrainingCard key={data} />
+        ))}
+      </HistoricContainer>
     </>
   );
 }
-
-const MainContainer = styled(Container)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: 18,
-  paddingBottom: 24,
-  minHeight: "100vh",
-  backgroundColor: "gainsboro",
-  boxShadow: "0px 0px 20px -1px rgba(0, 0, 0, 0.4)",
-}));
 
 const HistoricContainer = styled("div")(() => ({
   display: "flex",
