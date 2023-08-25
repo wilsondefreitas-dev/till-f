@@ -13,6 +13,10 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
+interface ICardSmallInfo {
+  progressed: boolean;
+}
+
 export default function TrainingCard() {
   const router = useRouter();
 
@@ -48,7 +52,7 @@ export default function TrainingCard() {
                 <CardInfoTitle>Carga:</CardInfoTitle>
               </Stack>
               <Stack direction="row" spacing={0.5} alignItems="center">
-                <ArrowUpwardIcon fontSize="1" color="success" />
+                <ArrowUpwardIcon fontSize="inherit" color="success" />
                 <CardInfo>
                   Supino Inclinado com Halteres&nbsp;
                   <CardSmallInfo progressed={true}>
@@ -58,7 +62,7 @@ export default function TrainingCard() {
               </Stack>
 
               <Stack direction="row" spacing={0.5} alignItems="center">
-                <ArrowDownwardIcon fontSize="1" color="error" />
+                <ArrowDownwardIcon fontSize="inherit" color="error" />
                 <CardInfo>
                   Desenvolvimento&nbsp;
                   <CardSmallInfo progressed={false}>
@@ -73,7 +77,7 @@ export default function TrainingCard() {
                 <CardInfoTitle>Repetição:</CardInfoTitle>
               </Stack>
               <Stack direction="row" spacing={0.5} alignItems="center">
-                <ArrowUpwardIcon fontSize="1" color="success" />
+                <ArrowUpwardIcon fontSize="inherit" color="success" />
                 <CardInfo>
                   Crucifixo Inclinado com Halteres&nbsp;
                   <CardSmallInfo progressed={true}>
@@ -134,7 +138,7 @@ const CardInfo = styled(Typography)(() => ({
 
 const CardSmallInfo = styled("small", {
   shouldForwardProp: (prop) => prop !== "progressed",
-})(({ progressed }) => ({
+})<ICardSmallInfo>(({ progressed }) => ({
   color: "gray",
   "& b": {
     color: "#4e4e4e",

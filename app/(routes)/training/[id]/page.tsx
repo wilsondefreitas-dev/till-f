@@ -39,7 +39,7 @@ export default function Page({ params }) {
           </Stack>
 
           <Observation>
-            <InfoIcon fontSize={"1"} />
+            <InfoIcon fontSize={"inherit"} />
             Dor no ombro esquerdo durante o Peck Deck.
           </Observation>
         </Stack>

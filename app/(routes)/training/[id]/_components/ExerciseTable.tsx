@@ -32,7 +32,7 @@ export default function ExerciseTable() {
       <Divider />
       <TableTitle justifyContent={"center"}>
         <Typography>
-          Aquecimento | <RestoreIcon fontSize="1" /> 90s
+          Aquecimento | <RestoreIcon fontSize="inherit" /> 90s
         </Typography>
         <Typography>Supino Inclinado com Halter</Typography>
       </TableTitle>
@@ -42,10 +42,10 @@ export default function ExerciseTable() {
             <TableRow>
               <TableHeaderCell>Series</TableHeaderCell>
               <TableHeaderCell>
-                <RepeatIcon fontSize="1" /> Reps. (8 ~ 15)
+                <RepeatIcon fontSize="inherit" /> Reps. (8 ~ 15)
               </TableHeaderCell>
               <TableHeaderCell>
-                <FitnessCenterIcon fontSize="1" /> Carga
+                <FitnessCenterIcon fontSize="inherit" /> Carga
               </TableHeaderCell>
             </TableRow>
           </TableHead>
@@ -57,11 +57,11 @@ export default function ExerciseTable() {
                 </TableCell>
                 <TableCell>
                   {row.reps}
-                  <ArrowUpwardIcon fontSize="1" color="success" />
+                  <ArrowUpwardIcon fontSize="inherit" color="success" />
                 </TableCell>
                 <TableCell>
                   {row.weight}
-                  <ArrowDownwardIcon fontSize="1" color="error" />
+                  <ArrowDownwardIcon fontSize="inherit" color="error" />
                 </TableCell>
               </TableRow>
             ))}
