@@ -1,5 +1,6 @@
-import * as React from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -10,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 export default function MenuAppBar({ showBackButton = true }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const router = useRouter();
 
@@ -24,7 +25,7 @@ export default function MenuAppBar({ showBackButton = true }) {
 
   return (
     <AppBar position="sticky">
-      <Toolbar variant="dense">
+      <ReducedToolbar variant="dense">
         <IconButton
           size="large"
           edge="start"
@@ -73,7 +74,13 @@ export default function MenuAppBar({ showBackButton = true }) {
             <MenuItem onClick={handleClose}>My account</MenuItem>
           </Menu>
         </div>
-      </Toolbar>
+      </ReducedToolbar>
     </AppBar>
   );
 }
+
+const ReducedToolbar = styled(Toolbar)(() => ({
+  maxWidth: 600,
+  width: "100%",
+  margin: "auto",
+}));
