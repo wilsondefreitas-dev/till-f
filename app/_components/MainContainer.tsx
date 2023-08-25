@@ -1,8 +1,13 @@
 "use client";
 import { styled } from "@mui/material";
 import Container from "@mui/material/Container";
+import { ReactNode } from "react";
 
-export default function MainContainer({ children }) {
+interface IProps {
+  children: ReactNode;
+}
+
+export default function MainContainer({ children }: IProps) {
   return <StyledContainer maxWidth="sm">{children}</StyledContainer>;
 }
 

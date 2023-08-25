@@ -6,8 +6,8 @@ import { styled } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
 
 export default function WorkoutButton() {
-  const buttonToTrain = useRef(null);
-  const fabToTrain = useRef(null);
+  const buttonToTrain = useRef<HTMLButtonElement>(null);
+  const fabToTrain = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,6 +21,8 @@ export default function WorkoutButton() {
   }, []);
 
   function showFabOnScroll() {
+    if (!buttonToTrain.current) throw new Error("buttonToTrain is not defined");
+
     const buttonMarginTopSize = parseInt(
       window
         .getComputedStyle(buttonToTrain.current)
@@ -30,8 +32,9 @@ export default function WorkoutButton() {
     const buttonHeight = buttonToTrain.current.offsetHeight;
 
     (document.onscroll = () => {
+      if (!fabToTrain.current) throw new Error("fabToTrain is not defined");
       const showFab = window.scrollY >= buttonMarginTopSize + buttonHeight;
-      fabToTrain.current.style.opacity = Number(showFab);
+      fabToTrain.current.style.opacity = Number(showFab).toString();
     })();
   }
 

@@ -1,7 +1,12 @@
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { ReactNode } from "react";
 
-export default function MainHeader({ children }) {
+interface IProps {
+  children: ReactNode;
+}
+
+export default function MainHeader({ children }: IProps) {
   return <Header>{children}</Header>;
 }
 

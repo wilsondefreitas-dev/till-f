@@ -8,7 +8,12 @@ import Stack from "@mui/material/Stack";
 import ExerciseTable from "./_components/ExerciseTable";
 import MainHeader from "../../../_components/MainHeader";
 
-export default function Page({ params }) {
+type Params = { [key: string]: string };
+interface IProps {
+  params: Params;
+}
+
+export default function Page({ params }: IProps) {
   const { id } = params;
   console.log(id);
 

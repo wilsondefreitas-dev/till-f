@@ -15,18 +15,24 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-function createData(series, reps, weight) {
-  return { series, reps, weight };
-}
-
-const rows = [
-  createData(1, `${15}`, `${17.5} kg`),
-  createData(2, `${10}`, `${18} kg`),
-  createData(3, `${7}`, `${18} kg`),
-  createData(4, `${12}`, `${17.5} kg`),
-];
-
 export default function ExerciseTable() {
+  const rows = [
+    {
+      series: 1,
+      reps: `${15}`,
+      weight: `${17.5} kg`,
+    },
+    {
+      series: 1,
+      reps: `${15}`,
+      weight: `${17.5} kg`,
+    },
+    {
+      series: 1,
+      reps: `${15}`,
+      weight: `${17.5} kg`,
+    },
+  ];
   return (
     <Stack spacing={1}>
       <Divider />
