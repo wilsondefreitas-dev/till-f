@@ -26,6 +26,7 @@
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "react/prop-types": 0,
-    "no-console": 1
+    "no-console": 1,
+    "react/react-in-jsx-scope": "off"
   }
 }
