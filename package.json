@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/wilsondefreitas-dev/till-f#readme",
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.4.19",
     "@types/node": "20.5.6",
     "eslint": "^8.47.0",
     "eslint-plugin-react": "^7.33.1",
