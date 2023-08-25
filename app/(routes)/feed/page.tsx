@@ -1,14 +1,14 @@
 "use client";
 import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 import TrainingCard from "./_components/TrainingCard";
-import NewTrainingButton from "./_components/NewTrainingButton";
+import WorkoutButton from "./_components/WorkoutButton";
+import MainHeader from "../../_components/MainHeader";
 
 export default function Feed() {
   return (
     <>
-      <NewTrainingButton />
-      <Header>histórico</Header>
+      <WorkoutButton />
+      <MainHeader>histórico</MainHeader>
 
       <HistoricContainer>
         {Array.from([1, 2, 3, 4, 5, 6], (data) => (
@@ -24,14 +24,4 @@ const HistoricContainer = styled("div")(() => ({
   flexDirection: "column",
   gap: 10,
   width: "100",
-}));
-
-const Header = styled(Typography)(() => ({
-  textAlign: "center",
-  color: "dimgray",
-  textTransform: "uppercase",
-  fontSize: 16,
-  borderBottom: "solid 1px rgba(0, 0, 0, 0.3)",
-  borderTop: "solid 1px rgba(0, 0, 0, 0.3)",
-  padding: 5,
 }));

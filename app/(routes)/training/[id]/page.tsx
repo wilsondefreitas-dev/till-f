@@ -6,6 +6,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import ExerciseTable from "./_components/ExerciseTable";
+import MainHeader from "../../../_components/MainHeader";
 
 export default function Page({ params }) {
   const { id } = params;
@@ -17,7 +18,7 @@ export default function Page({ params }) {
 
   return (
     <>
-      <Header>detalhes</Header>
+      <MainHeader>detalhes</MainHeader>
 
       <Stack spacing={1}>
         <Stack>
@@ -50,18 +51,6 @@ export default function Page({ params }) {
     </>
   );
 }
-
-//dupe - feed page
-const Header = styled(Typography)(() => ({
-  textAlign: "center",
-  color: "dimgray",
-  textTransform: "uppercase",
-  fontSize: 16,
-  borderBottom: "solid 1px rgba(0, 0, 0, 0.3)",
-  borderTop: "solid 1px rgba(0, 0, 0, 0.3)",
-  padding: 5,
-  marginTop: 24, //uniq
-}));
 
 const TrainingTitle = styled(Typography)(() => ({
   textAlign: "center",

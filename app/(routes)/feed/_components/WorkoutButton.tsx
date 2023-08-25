@@ -5,7 +5,7 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { styled } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
 
-export default function NewTrainingButton() {
+export default function WorkoutButton() {
   const buttonToTrain = useRef(null);
   const fabToTrain = useRef(null);
   const router = useRouter();
@@ -66,6 +66,5 @@ const FixedFab = styled(Fab)(() => ({
 
 const LongButton = styled(Button)(() => ({
   width: "100%",
-  marginTop: 24,
   height: 50,
 }));

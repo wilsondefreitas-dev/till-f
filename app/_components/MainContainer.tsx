@@ -11,6 +11,7 @@ const StyledContainer = styled(Container)(() => ({
   flexDirection: "column",
   gap: 18,
   paddingBottom: 24,
+  paddingTop: 24,
   minHeight: "100vh",
   backgroundColor: "gainsboro",
   boxShadow: "0px 0px 20px -1px rgba(0, 0, 0, 0.4)",
