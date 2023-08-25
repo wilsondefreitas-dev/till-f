@@ -4,12 +4,10 @@ import Typography from "@mui/material/Typography";
 import TrainingCard from "./_components/TrainingCard";
 import Container from "@mui/material/Container";
 import NewTrainingButton from "./_components/NewTrainingButton";
-import MenuAppBar from "../../_components/MenuAppBar";
 
 export default function Feed() {
   return (
     <>
-      <MenuAppBar showBackButton={false} />
       <MainContainer maxWidth="sm">
         <NewTrainingButton />
         <Header>histórico</Header>

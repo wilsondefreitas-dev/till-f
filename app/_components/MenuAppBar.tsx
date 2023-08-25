@@ -1,5 +1,6 @@
+"use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,8 +13,11 @@ import Menu from "@mui/material/Menu";
 
 export default function MenuAppBar({ showBackButton = true }) {
   const [anchorEl, setAnchorEl] = useState(null);
-
   const router = useRouter();
+  const pathname = usePathname();
+  const routesToHideBackButton = ["/feed"];
+
+  showBackButton = !routesToHideBackButton.includes(pathname);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);

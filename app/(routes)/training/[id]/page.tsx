@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import InfoIcon from "@mui/icons-material/Info";
-import MenuAppBar from "../../../_components/MenuAppBar";
 import { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import ExerciseTable from "./_components/ExerciseTable";
@@ -19,7 +18,6 @@ export default function Page({ params }) {
 
   return (
     <>
-      <MenuAppBar />
       <MainContainer maxWidth="sm">
         <Header>detalhes</Header>
 
