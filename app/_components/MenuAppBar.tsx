@@ -50,6 +50,10 @@ export default function MenuAppBar({
     router.push("/training/list");
   }
 
+  function handleGoHome(): void {
+    router.push("/feed");
+  }
+
   return (
     <AppBar position="sticky">
       <ReducedToolbar variant="dense">
@@ -66,7 +70,14 @@ export default function MenuAppBar({
         <Typography
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, textAlign: "center" }}
+          sx={{
+            flexGrow: 1,
+            textAlign: "center",
+            cursor: showBackButton ? "pointer" : "auto",
+          }}
+          onClick={(): void => {
+            showBackButton && handleGoHome();
+          }}
         >
           Till-F
         </Typography>
