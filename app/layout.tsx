@@ -5,7 +5,8 @@ import "@fontsource/roboto/700.css";
 import "./_styles/global.css";
 import MenuAppBar from "./_components/MenuAppBar";
 import MainContainer from "./_components/MainContainer";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
+import Loading from "./loading";
 
 interface IMetadata {
   [key: string]: string;
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <MenuAppBar showBackButton={false} />
-        <MainContainer>{children}</MainContainer>
+        <Suspense fallback={<Loading />}>
+          <MainContainer>{children}</MainContainer>
+        </Suspense>
       </body>
     </html>
   );
