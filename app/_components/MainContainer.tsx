@@ -3,14 +3,15 @@ import { styled } from "@mui/material";
 import Container from "@mui/material/Container";
 import { ReactNode } from "react";
 
-interface IProps {
+export default function MainContainer({
+  children,
+}: {
   children: ReactNode;
-}
-
-export default function MainContainer({ children }: IProps) {
+}): JSX.Element {
   return <StyledContainer maxWidth="sm">{children}</StyledContainer>;
 }
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const StyledContainer = styled(Container)(() => ({
   display: "flex",
   flexDirection: "column",

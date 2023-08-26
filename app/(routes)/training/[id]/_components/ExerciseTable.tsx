@@ -12,35 +12,24 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Divider from "@mui/material/Divider";
 import RepeatIcon from "@mui/icons-material/Repeat";
-import { styled } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { ISeriesData, IWorkoutData } from "../page";
 
-export default function ExerciseTable() {
-  const rows = [
-    {
-      series: 1,
-      reps: `${15}`,
-      weight: `${17.5} kg`,
-    },
-    {
-      series: 1,
-      reps: `${15}`,
-      weight: `${17.5} kg`,
-    },
-    {
-      series: 1,
-      reps: `${15}`,
-      weight: `${17.5} kg`,
-    },
-  ];
+interface IProps {
+  data: IWorkoutData;
+}
+
+export default function ExerciseTable({ data }: IProps): JSX.Element {
+  const { type, restSecs, name, repeatsRange, seriesData }: IWorkoutData = data;
   return (
     <Stack spacing={1}>
       <Divider />
       <TableTitle justifyContent={"center"}>
         <Typography>
-          Aquecimento | <RestoreIcon fontSize="inherit" /> 90s
+          {type} | <RestoreIcon fontSize="inherit" /> {`${restSecs}s`}
         </Typography>
-        <Typography>Supino Inclinado com Halter</Typography>
+        <Typography>{name}</Typography>
       </TableTitle>
       <TableContainer component={Paper}>
         <Table size="small">
@@ -48,7 +37,8 @@ export default function ExerciseTable() {
             <TableRow>
               <TableHeaderCell>Series</TableHeaderCell>
               <TableHeaderCell>
-                <RepeatIcon fontSize="inherit" /> Reps. (8 ~ 15)
+                <RepeatIcon fontSize="inherit" />
+                {`Reps. (${repeatsRange.min} ~ ${repeatsRange.max})`}
               </TableHeaderCell>
               <TableHeaderCell>
                 <FitnessCenterIcon fontSize="inherit" /> Carga
@@ -56,10 +46,10 @@ export default function ExerciseTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.series}>
+            {seriesData.map((row: ISeriesData) => (
+              <TableRow key={row.serieNumber}>
                 <TableCell>
-                  <b>{row.series}</b>
+                  <b>{row.serieNumber}</b>
                 </TableCell>
                 <TableCell>
                   {row.reps}
@@ -78,6 +68,7 @@ export default function ExerciseTable() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const TableTitle = styled(Stack)(() => ({
   fontSize: 15,
   textAlign: "center",
@@ -94,7 +85,8 @@ const TableTitle = styled(Stack)(() => ({
   },
 }));
 
-const TableHeaderCell = styled(TableCell)(({ theme }) => ({
+// eslint-disable-next-line @typescript-eslint/typedef
+const TableHeaderCell = styled(TableCell)(({ theme }: { theme: Theme }) => ({
   backgroundColor: theme.palette.info.main,
   color: "white",
   "& svg": {

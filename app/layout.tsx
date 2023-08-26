@@ -7,15 +7,19 @@ import MenuAppBar from "./_components/MenuAppBar";
 import MainContainer from "./_components/MainContainer";
 import { ReactNode } from "react";
 
-interface IProps {
-  children: ReactNode;
+interface IMetadata {
+  [key: string]: string;
 }
 
-export const metadata = {
+export const metadata: IMetadata = {
   description: "Your workout mate!",
 };
 
-export default function RootLayout({ children }: IProps) {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element {
   return (
     <html lang="en">
       <body>

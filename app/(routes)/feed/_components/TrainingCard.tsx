@@ -10,15 +10,20 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { styled } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 interface ICardSmallInfo {
   progressed: boolean;
 }
 
-export default function TrainingCard() {
-  const router = useRouter();
+export default function TrainingCard(): JSX.Element {
+  const router: AppRouterInstance = useRouter();
+
+  function handleGoToDetails(): void {
+    router.push("/training/test");
+  }
 
   return (
     <>
@@ -101,7 +106,7 @@ export default function TrainingCard() {
         <Divider />
 
         <CardActions>
-          <Button size="small" onClick={() => router.push("/training/test")}>
+          <Button size="small" onClick={handleGoToDetails}>
             ver detalhes
           </Button>
         </CardActions>
@@ -110,6 +115,7 @@ export default function TrainingCard() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const CardAvatar = styled(Avatar)(() => ({
   width: 20,
   height: 20,
@@ -117,28 +123,33 @@ const CardAvatar = styled(Avatar)(() => ({
   backgroundColor: red[500],
 }));
 
-const CardHeader = styled(Typography)(({ theme }) => ({
+// eslint-disable-next-line @typescript-eslint/typedef
+const CardHeader = styled(Typography)(({ theme }: { theme: Theme }) => ({
   fontSize: 12,
   color: theme.palette.text.secondary,
 }));
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const CardChip = styled(Chip)(() => ({
   fontSize: 12,
 }));
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const CardInfoTitle = styled(Typography)(() => ({
   fontSize: 14,
   fontWeight: "bold",
   color: "#4e4e4e",
 }));
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const CardInfo = styled(Typography)(() => ({
   fontSize: 14,
 }));
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const CardSmallInfo = styled("small", {
-  shouldForwardProp: (prop) => prop !== "progressed",
-})<ICardSmallInfo>(({ progressed }) => ({
+  shouldForwardProp: (prop: PropertyKey) => prop !== "progressed",
+})<ICardSmallInfo>(({ progressed }: { progressed: boolean }) => ({
   color: "gray",
   "& b": {
     color: "#4e4e4e",

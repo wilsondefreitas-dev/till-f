@@ -9,17 +9,110 @@ import ExerciseTable from "./_components/ExerciseTable";
 import MainHeader from "../../../_components/MainHeader";
 
 type Params = { [key: string]: string };
+
+interface ITraining {
+  date: string;
+  number: number;
+  name: string;
+  muscles: string;
+  observation: string;
+  workoutData: IWorkoutData[];
+  extraData: IExtraData;
+}
+
+export interface IWorkoutData {
+  type: string;
+  name: string;
+  restSecs: number;
+  repeatsRange: { min: number; max: number };
+  seriesData: ISeriesData[];
+} //remove optional when remove mock data
+
+export interface ISeriesData {
+  serieNumber: number;
+  reps: string;
+  weight: string;
+}
+
+interface IExtraData {
+  duration: number;
+  sleep: { done: number; max: number };
+  meals: { done: number; max: number };
+}
+
 interface IProps {
   params: Params;
 }
 
-export default function Page({ params }: IProps) {
-  const { id } = params;
+const data: ITraining = {
+  date: "01 de agosto, quarta | 10:23 → 11h55",
+  number: 33,
+  name: "Treino A",
+  muscles: "Peito, ombro e tríceps",
+  observation: "Dor no ombro esquerdo durante o Peck Deck",
+  workoutData: [
+    {
+      type: "aquecimento",
+      name: "Supino Inclinado com Halter",
+      restSecs: 90,
+      repeatsRange: { min: 6, max: 15 },
+      seriesData: [
+        {
+          serieNumber: 1,
+          reps: `${15}`,
+          weight: `${17.5} kg`,
+        },
+        {
+          serieNumber: 2,
+          reps: `${15}`,
+          weight: `${17.5} kg`,
+        },
+        {
+          serieNumber: 3,
+          reps: `${15}`,
+          weight: `${17.5} kg`,
+        },
+      ],
+    },
+  ],
+  extraData: {
+    duration: 116,
+    sleep: { done: 5, max: 6 },
+    meals: { done: 6, max: 6 },
+  },
+};
+
+export default function Page({ params }: IProps): JSX.Element {
+  const { id }: Params = params;
+  const {
+    date,
+    number,
+    name,
+    muscles,
+    observation,
+    extraData,
+    workoutData,
+  }: ITraining = data;
+
   console.log(id);
 
   useEffect(() => {
-    if (typeof window === "object") window.scrollTo(0, 0);
+    scrollToTop();
   }, []);
+
+  function scrollToTop(): void {
+    if (typeof window !== "object") throw new Error("window is undefined");
+    window.scrollTo(0, 0);
+  }
+
+  function getDuration(): string {
+    const minsToHours: number = extraData.duration / 60;
+    const hours: number = Math.floor(minsToHours);
+    const restMins: number = minsToHours - hours;
+    const mins: number = restMins * 60;
+
+    return `${hours}:${mins}`; //todo
+  }
 
   return (
     <>
@@ -27,40 +120,53 @@ export default function Page({ params }: IProps) {
 
       <Stack spacing={1}>
         <Stack>
-          <HeaderInfo>01 de agosto, quarta | 10:23 → 11h55</HeaderInfo>
+          <HeaderInfo>{date}</HeaderInfo>
 
           <TrainingTitle variant="h6">
-            33° - Treino A - Peito, ombro e tríceps
+            {`${number}° - ${name} - ${muscles}`}
           </TrainingTitle>
 
           <Stack direction="row" spacing={0.5} justifyContent={"center"}>
-            <Chip label="01h42 de duração" color="info" size="small" />
-            <Chip label="6 de 6 refeições" color="success" size="small" />
-            <Chip label="7 de 8 horas de sono" color="warning" size="small" />
+            <Chip
+              label={`${getDuration()} de duração`}
+              color="info"
+              size="small"
+            />
+            <Chip
+              label={`${extraData.meals.done} de ${extraData.meals.max} refeições`}
+              color="success"
+              size="small"
+            />
+            <Chip
+              label={`${extraData.sleep.done} de ${extraData.sleep.max} horas de sono`}
+              color="warning"
+              size="small"
+            />
           </Stack>
         </Stack>
 
-        <Observation>
-          <InfoIcon fontSize={"inherit"} />
-          Dor no ombro esquerdo durante o Peck Deck.
-        </Observation>
+        {observation && (
+          <Observation>
+            <InfoIcon fontSize={"inherit"} />
+            {observation}
+          </Observation>
+        )}
       </Stack>
 
-      <ExerciseTable />
-      <ExerciseTable />
-      <ExerciseTable />
-      <ExerciseTable />
-      <ExerciseTable />
-      <ExerciseTable />
-      <ExerciseTable />
+      {workoutData &&
+        workoutData.map((data: IWorkoutData) => (
+          <ExerciseTable key={data.name} data={data} />
+        ))}
     </>
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const TrainingTitle = styled(Typography)(() => ({
   textAlign: "center",
 }));
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const HeaderInfo = styled(Typography)(({ theme }) => ({
   fontSize: 12,
   textAlign: "center",
@@ -68,6 +174,7 @@ const HeaderInfo = styled(Typography)(({ theme }) => ({
   margin: 0,
 }));
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const Observation = styled(Typography)(({ theme }) => ({
   display: "flex",
   alignItems: "center",

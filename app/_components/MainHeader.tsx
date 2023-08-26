@@ -2,14 +2,15 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { ReactNode } from "react";
 
-interface IProps {
+export default function MainHeader({
+  children,
+}: {
   children: ReactNode;
-}
-
-export default function MainHeader({ children }: IProps) {
+}): JSX.Element {
   return <Header>{children}</Header>;
 }
 
+// eslint-disable-next-line @typescript-eslint/typedef
 const Header = styled(Typography)(() => ({
   textAlign: "center",
   color: "dimgray",
