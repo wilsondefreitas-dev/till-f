@@ -1,10 +1,10 @@
 import { RefObject, useEffect, useRef } from "react";
 import Fab from "@mui/material/Fab";
-import Button from "@mui/material/Button";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { styled } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import LongButton from "../../../_components/LongButton";
 
 export default function WorkoutButton(): JSX.Element {
   const buttonToTrain: RefObject<HTMLButtonElement> =
@@ -45,16 +45,12 @@ export default function WorkoutButton(): JSX.Element {
   }
 
   function handleOnClick(): void {
-    router.push("/training/workout");
+    router.push("/workout");
   }
 
   return (
     <>
-      <LongButton
-        ref={buttonToTrain}
-        variant="contained"
-        onClick={handleOnClick}
-      >
+      <LongButton ref={buttonToTrain} onClick={handleOnClick}>
         Treinar
       </LongButton>
 
@@ -72,10 +68,4 @@ const FixedFab = styled(Fab)(() => ({
   right: 24,
   opacity: 0,
   transition: "opacity 0.25s",
-}));
-
-// eslint-disable-next-line @typescript-eslint/typedef
-const LongButton = styled(Button)(() => ({
-  width: "100%",
-  height: 50,
 }));
