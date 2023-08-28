@@ -20,7 +20,7 @@ So, Till-F is going to process the data that you inputed and generate some graph
 
 ## How to start
 
-Access [the web site](tillf.com.br), create your user, add your workout plan and start to register the training variants.
+Access [the web site](https://www.tillf.com.br), create your user, add your workout plan and start to register the training variants.
 
 See you at gym! 💪
 
