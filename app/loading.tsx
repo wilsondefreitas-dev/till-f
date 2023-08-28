@@ -1,4 +1,12 @@
+"use client";
+import { styled } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
 export default function Loading(): JSX.Element {
-  // You can add any UI inside Loading, including a Skeleton.
-  return <h1>Loading...</h1>;
+  return <Loader />;
 }
+
+// eslint-disable-next-line @typescript-eslint/typedef
+const Loader = styled(CircularProgress)(() => ({
+  margin: "0 auto",
+}));
