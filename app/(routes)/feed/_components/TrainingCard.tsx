@@ -22,7 +22,7 @@ export default function TrainingCard(): JSX.Element {
   const router: AppRouterInstance = useRouter();
 
   function handleGoToDetails(): void {
-    router.push("/training/test");
+    router.push("/training/details/11111");
   }
 
   return (

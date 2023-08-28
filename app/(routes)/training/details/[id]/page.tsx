@@ -6,7 +6,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import ExerciseTable from "./_components/ExerciseTable";
-import MainHeader from "../../../_components/MainHeader";
+import MainHeader from "../../../../_components/MainHeader";
 
 type Params = { [key: string]: string };
 
@@ -82,7 +82,7 @@ const data: ITraining = {
   },
 };
 
-export default function Page({ params }: IProps): JSX.Element {
+export default function Details({ params }: IProps): JSX.Element {
   const { id }: Params = params;
   const {
     date,
