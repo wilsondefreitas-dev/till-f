@@ -22,6 +22,6 @@ So, Till-F is going to process the data that you inputed and generate some graph
 
 Access [the web site](tillf.com.br), create your user, add your workout plan and start to register the training variants.
 
-See you in gym! 💪
+See you at gym! 💪
 
 ![](https://media.giphy.com/media/tBYOOzPcku9s4/giphy.gif)
