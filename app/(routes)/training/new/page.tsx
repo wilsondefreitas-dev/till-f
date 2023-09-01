@@ -67,13 +67,14 @@ export default function NewTraining(): JSX.Element {
     <>
       <MainHeader>Criar Novo Treino</MainHeader>
 
-      <Stack spacing={"18px"}>
+      <Stack>
         <TextField
-          variant="filled"
+          variant="standard"
           label="Nome"
           value={name}
           onChange={handleNameOnChange}
           required
+          multiline
         />
 
         {trainingFormsData.map((value: object, index: number) => (

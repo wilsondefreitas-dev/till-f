@@ -8,8 +8,11 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ITrainingDataObject } from "../page";
+import { styled, Theme } from "@mui/material/styles";
 
 interface IProps {
   trainingID: string;
@@ -34,25 +37,19 @@ export default function TrainingForm({
   }
 
   return (
-    <Stack spacing={"18px"}>
-      <Divider
-        sx={{
-          position: "sticky",
-          top: "48px",
-          backgroundColor: "gainsboro",
-          zIndex: 2,
-        }}
-      >
-        <Typography>Exercício {trainingID}</Typography>
-      </Divider>
+    <Stack>
+      <FormHeader>{trainingID}º Exercício</FormHeader>
+
       <Card>
         <CardContent>
           <Stack spacing={"18px"}>
             <FormControl sx={{ marginTop: "0 !important" }} required>
-              <InputLabel id="demo-simple-select-filled-label">Tipo</InputLabel>
+              <InputLabel id="demo-simple-select-filled-label-2">
+                Tipo
+              </InputLabel>
               <Select
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
+                labelId="demo-simple-select-filled-label-2"
+                id="demo-simple-select-filled-2"
                 label="Tipo"
                 value={type}
                 onChange={handleTypeOnChange}
@@ -72,12 +69,13 @@ export default function TrainingForm({
                 id="nameInput"
                 label="Número de Series"
                 type="number"
+                inputProps={{ inputMode: "numeric" }}
                 required
               />
             </Stack>
 
             <Divider>
-              <Typography>Range de Descanso em Segundos</Typography>
+              <FormSubTitle>Range de Descanso em Segundos</FormSubTitle>
             </Divider>
 
             <Stack direction={"row"} spacing={"18px"}>
@@ -86,6 +84,7 @@ export default function TrainingForm({
                 id="nameInput"
                 label="Mín."
                 type="number"
+                inputProps={{ inputMode: "numeric" }}
                 required
               />
               <TextField
@@ -93,11 +92,12 @@ export default function TrainingForm({
                 id="nameInput"
                 label="Máx."
                 type="number"
+                inputProps={{ inputMode: "numeric" }}
               />
             </Stack>
 
             <Divider>
-              <Typography>Range de Repetição</Typography>
+              <FormSubTitle>Range de Repetição</FormSubTitle>
             </Divider>
 
             <Stack direction={"row"} spacing={"18px"}>
@@ -106,6 +106,7 @@ export default function TrainingForm({
                 id="nameInput"
                 label="Mín."
                 type="number"
+                inputProps={{ inputMode: "numeric" }}
                 required
               />
               <TextField
@@ -113,14 +114,38 @@ export default function TrainingForm({
                 id="nameInput"
                 label="Máx."
                 type="number"
+                inputProps={{ inputMode: "numeric" }}
               />
             </Stack>
           </Stack>
         </CardContent>
+
+        <Divider />
+
+        <CardActions>
+          <Button size="small">excluir</Button>
+        </CardActions>
       </Card>
     </Stack>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/typedef
+const FormHeader = styled(Typography)(() => ({
+  position: "sticky",
+  top: 48,
+  padding: "14px 0",
+  textAlign: "center",
+  backgroundColor: "gainsboro",
+  zIndex: 2,
+  fontWeight: "bold",
+}));
+
+// eslint-disable-next-line @typescript-eslint/typedef
+const FormSubTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  fontSize: 14,
+  color: theme.palette.text.secondary,
+}));
 
 {
   /* <Stack spacing={"18px"}>
