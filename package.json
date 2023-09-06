@@ -7,7 +7,8 @@
     "@mui/material": "^5.14.4",
     "next": "^13.4.19",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
   },
   "name": "till-f",
   "description": "Till-F is a system to manage workout plan, to record data and measure progress.",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.19",
     "@types/node": "20.5.6",
+    "@types/uuid": "^9.0.3",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.47.0",
