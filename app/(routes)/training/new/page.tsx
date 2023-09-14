@@ -3,16 +3,15 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
-import TrainingForm from "./_components/TrainingForm";
+import TrainingForm, {
+  IExerciseDataObject,
+} from "../../../_components/TrainingForm";
+import { v4 as uuidv4 } from "uuid";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-export interface ITrainingDataObject {
-  id: string;
-  type: string;
-}
 
 type TrainingDataState = [
-  ITrainingDataObject[],
-  Dispatch<SetStateAction<ITrainingDataObject[]>>,
+  IExerciseDataObject[],
+  Dispatch<SetStateAction<IExerciseDataObject[]>>,
 ];
 
 type ControlledInputState = [string, Dispatch<SetStateAction<string>>];
@@ -20,33 +19,43 @@ type ControlledInputState = [string, Dispatch<SetStateAction<string>>];
 export default function NewTraining(): JSX.Element {
   const [name, setName]: ControlledInputState = useState<string>("");
   const [trainingFormsData, setTrainingFormsData]: TrainingDataState = useState<
-    ITrainingDataObject[]
+    IExerciseDataObject[]
   >([]);
 
-  function handleAddTraining(): void {
-    addNewTraining();
+  function handleAddExercise(): void {
+    addNewExercise();
   }
 
-  function addNewTraining(): void {
-    setTrainingFormsData([...trainingFormsData, getTrainingDataObject()]);
+  function addNewExercise(): void {
+    setTrainingFormsData([...trainingFormsData, getNewExerciseDataObject()]);
   }
 
-  function getTrainingDataObject(): ITrainingDataObject {
-    const id: string = trainingFormsData.length.toString();
+  function removeTraining(id: string): void {
+    const aCopy: IExerciseDataObject[] = [...trainingFormsData];
+    const indexToDelete: number = aCopy.findIndex(
+      (data: IExerciseDataObject): boolean => data.id === id,
+    );
+
+    aCopy.splice(indexToDelete, 1);
+    setTrainingFormsData(aCopy);
+  }
+
+  function getNewExerciseDataObject(): IExerciseDataObject {
     return {
-      id,
+      id: uuidv4(),
       type: "",
+      name: "",
     };
   }
 
-  function updateTrainingDataObject(
+  function updateExerciseDataObject(
     id: string,
-    key: keyof ITrainingDataObject,
+    key: keyof IExerciseDataObject,
     value: string,
   ): void {
-    const aCopy: ITrainingDataObject[] = [...trainingFormsData];
+    const aCopy: IExerciseDataObject[] = [...trainingFormsData];
     const indexToUpdate: number = aCopy.findIndex(
-      (data: ITrainingDataObject): boolean => data.id === id,
+      (data: IExerciseDataObject): boolean => data.id === id,
     );
 
     if (indexToUpdate === -1)
@@ -77,16 +86,17 @@ export default function NewTraining(): JSX.Element {
           multiline
         />
 
-        {trainingFormsData.map((value: object, index: number) => (
+        {trainingFormsData.map((value: IExerciseDataObject, index: number) => (
           <TrainingForm
             key={index}
-            trainingID={(++index).toString()}
-            updateTrainingDataObject={updateTrainingDataObject}
+            exerciseData={value}
+            updateExerciseDataObject={updateExerciseDataObject}
+            removeTraining={removeTraining}
           />
         ))}
       </Stack>
 
-      <LongButton onClick={handleAddTraining}>Adicionar Exercício</LongButton>
+      <LongButton onClick={handleAddExercise}>Adicionar Exercício</LongButton>
       <LongButton disabled={true}>Salvar Treino</LongButton>
     </>
   );
