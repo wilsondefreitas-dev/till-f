@@ -44,14 +44,25 @@ export default function NewTraining(): JSX.Element {
     return {
       id: uuidv4(),
       type: "",
-      name: "",
+      name: { exercise1: "", exercise2: "" },
     };
   }
+
+  /**
+   * 'no-explicit-any' is disabled on this function
+   * because I want the possibility to set the
+   * attributes of ExerciseDataObject in a generic
+   * way. To avoid this, I should create specific
+   * functions to set the attributes based on their
+   * type. At this POC moment, make no sense, since
+   * I'm still finding out the attributes types.
+   */
 
   function updateExerciseDataObject(
     id: string,
     key: keyof IExerciseDataObject,
-    value: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
   ): void {
     const aCopy: IExerciseDataObject[] = [...trainingFormsData];
     const indexToUpdate: number = aCopy.findIndex(

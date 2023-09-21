@@ -16,15 +16,20 @@ import { ChangeEvent } from "react";
 export interface IExerciseDataObject {
   id: string;
   type: string;
-  name: string;
+  name: ExerciseName;
 }
+
+export type ExerciseName = {
+  exercise1: string;
+  exercise2: string;
+};
 
 interface IProps {
   exerciseData: IExerciseDataObject;
   updateExerciseDataObject(
     id: string,
     key: keyof IExerciseDataObject,
-    value: string,
+    value: string | ExerciseName,
   ): void;
   removeTraining(id: string): void;
 }
@@ -43,16 +48,28 @@ export default function TrainingForm({
     removeTraining(exerciseData.id);
   }
 
-  function handleNameOnChange(e: ChangeEvent): void {
+  function handleNameOnChange(e: ChangeEvent, subExerciseNum: number): void {
     const name: string = (e.target as HTMLInputElement).value;
-    updateExerciseDataObject(exerciseData.id, "name", name);
+    updateExerciseDataObject(exerciseData.id, "name", {
+      ...exerciseData.name,
+      [`exercise${subExerciseNum}`]: name,
+    });
   }
 
   function getTitle(): string {
     const defaultTitle: string = "Novo Exercício";
-    const isNameFilled: boolean = exerciseData.name.length > 0;
+    const isExercise1NameFilled: boolean =
+      exerciseData.name.exercise1.length > 0;
+    const isExercise2NameFilled: boolean =
+      exerciseData.name.exercise2.length > 0;
 
-    return isNameFilled ? exerciseData.name : defaultTitle;
+    if (isExercise1NameFilled && isExercise2NameFilled) {
+      return `${exerciseData.name.exercise1} / ${exerciseData.name.exercise2}`;
+    } else if (isExercise1NameFilled) {
+      return exerciseData.name.exercise1;
+    } else {
+      return defaultTitle;
+    }
   }
 
   const RestInputsTitle = (): JSX.Element => {
@@ -88,7 +105,12 @@ export default function TrainingForm({
                 <SubExercise>
                   <Typography component={"legend"}>Exercício A</Typography>
 
-                  <TextField id="nameInput" label="Nome" required multiline />
+                  <NameInput
+                    handleNameOnChange={(e: ChangeEvent<Element>): void =>
+                      handleNameOnChange(e, 1)
+                    }
+                    value={exerciseData.name.exercise1}
+                  />
 
                   <TextField
                     sx={{ flex: 1 }}
@@ -138,7 +160,12 @@ export default function TrainingForm({
                 <SubExercise>
                   <Typography component={"legend"}>Exercício B</Typography>
 
-                  <TextField id="nameInput" label="Nome" required multiline />
+                  <NameInput
+                    handleNameOnChange={(e: ChangeEvent<Element>): void =>
+                      handleNameOnChange(e, 2)
+                    }
+                    value={exerciseData.name.exercise2}
+                  />
 
                   <TextField
                     sx={{ flex: 1 }}
@@ -188,8 +215,10 @@ export default function TrainingForm({
             ) : (
               <>
                 <NameInput
-                  handleNameOnChange={handleNameOnChange}
-                  exerciseData={exerciseData}
+                  handleNameOnChange={(e: ChangeEvent<Element>): void =>
+                    handleNameOnChange(e, 1)
+                  }
+                  value={exerciseData.name.exercise1}
                 />
 
                 <TextField
@@ -258,10 +287,10 @@ export default function TrainingForm({
 }
 
 const NameInput = ({
-  exerciseData,
+  value,
   handleNameOnChange,
 }: {
-  exerciseData: IExerciseDataObject;
+  value: string;
   handleNameOnChange: (e: ChangeEvent) => void;
 }): JSX.Element => {
   return (
@@ -269,7 +298,7 @@ const NameInput = ({
       id="nameInput"
       label="Nome"
       onChange={handleNameOnChange}
-      value={exerciseData.name}
+      value={value}
       required
       multiline
     />
