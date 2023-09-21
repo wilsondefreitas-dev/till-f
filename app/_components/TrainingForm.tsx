@@ -31,13 +31,19 @@ interface IProps {
     key: keyof IExerciseDataObject,
     value: string | ExerciseName,
   ): void;
+  changeExercisePosition(id: string, to: number): void;
   removeTraining(id: string): void;
+  exercisesNum: number;
+  position: number;
 }
 
 export default function TrainingForm({
   exerciseData,
   updateExerciseDataObject,
+  changeExercisePosition,
   removeTraining,
+  exercisesNum,
+  position,
 }: IProps): JSX.Element {
   function handleTypeOnChange(e: SelectChangeEvent): void {
     const type: string = e.target.value;
@@ -56,6 +62,11 @@ export default function TrainingForm({
     });
   }
 
+  function handlePositionOnChange(e: SelectChangeEvent): void {
+    const to: number = parseInt(e.target.value) - 1;
+    changeExercisePosition(exerciseData.id, to);
+  }
+
   function getTitle(): string {
     const defaultTitle: string = "Novo Exercício";
     const isExercise1NameFilled: boolean =
@@ -71,6 +82,8 @@ export default function TrainingForm({
       return defaultTitle;
     }
   }
+
+  //
 
   const RestInputsTitle = (): JSX.Element => {
     return (
@@ -90,7 +103,14 @@ export default function TrainingForm({
 
   return (
     <Stack>
-      <FormHeader>{getTitle()}</FormHeader>
+      <FormHeader>
+        <PositionSelect
+          exercisesNum={exercisesNum}
+          position={position}
+          handlePositionOnChange={handlePositionOnChange}
+        />
+        <span>{getTitle()}</span>
+      </FormHeader>
 
       <Card>
         <CardContent>
@@ -331,6 +351,42 @@ const TypeSelect = ({
   );
 };
 
+const PositionSelect = ({
+  exercisesNum,
+  position,
+  handlePositionOnChange,
+}: {
+  exercisesNum: number;
+  position: number;
+  handlePositionOnChange: (e: SelectChangeEvent) => void;
+}): JSX.Element => {
+  function getExerciseNum(index: number): string {
+    return (index + 1).toString();
+  }
+  function getExercisePosition(position: number): string {
+    return (position + 1).toString();
+  }
+
+  return (
+    <PositionFormControl variant="standard" size={"small"}>
+      <InputLabel></InputLabel>
+      <Select
+        labelId="position-select"
+        id="position-select"
+        value={getExercisePosition(position)}
+        onChange={handlePositionOnChange}
+      >
+        {Array.from(new Array(exercisesNum), (_: undefined, index: number) => (
+          <MenuItem
+            key={`${_}-${index}`}
+            value={getExerciseNum(index)}
+          >{`${getExerciseNum(index)}°`}</MenuItem>
+        ))}
+      </Select>
+    </PositionFormControl>
+  );
+};
+
 // eslint-disable-next-line @typescript-eslint/typedef
 const FormHeader = styled(Typography)(() => ({
   position: "sticky",
@@ -340,6 +396,12 @@ const FormHeader = styled(Typography)(() => ({
   backgroundColor: "gainsboro",
   zIndex: 2,
   fontWeight: "bold",
+  display: "flex",
+  justifyContent: "center",
+  gap: "8px",
+  "& :first-letter": {
+    textTransform: "uppercase",
+  },
 }));
 
 // eslint-disable-next-line @typescript-eslint/typedef
@@ -355,4 +417,10 @@ const SubExercise = styled("fieldset")(() => ({
   gap: 18,
   borderColor: "rgba(0, 0, 0, 0.23)",
   borderRadius: 4,
+}));
+
+// eslint-disable-next-line @typescript-eslint/typedef
+const PositionFormControl = styled(FormControl)(() => ({
+  "& .MuiInputBase-root": { marginTop: "0" },
+  "& .MuiSelect-select": { padding: "0 28px 0 10px" },
 }));

@@ -83,6 +83,28 @@ export default function NewTraining(): JSX.Element {
     setName(el.value);
   }
 
+  function changeExercisePosition(id: string, to: number): void {
+    const aCopy: IExerciseDataObject[] = [...trainingFormsData];
+    const exerciseToSwapPosition: number = getExercisePosition(id);
+    const exerciseToSwap: IExerciseDataObject = aCopy[exerciseToSwapPosition];
+
+    aCopy[exerciseToSwapPosition] = aCopy[to];
+    aCopy[to] = exerciseToSwap;
+
+    setTrainingFormsData(aCopy);
+  }
+
+  function getExercisePosition(id: string): number {
+    const exercise: IExerciseDataObject | undefined = trainingFormsData.find(
+      (exercise: IExerciseDataObject) => exercise.id === id,
+    );
+
+    if (!exercise) throw new Error("Exercise not found in trainingFormsData");
+
+    const position: number = trainingFormsData.indexOf(exercise);
+    return position;
+  }
+
   return (
     <>
       <MainHeader>Criar Novo Treino</MainHeader>
@@ -102,7 +124,10 @@ export default function NewTraining(): JSX.Element {
             key={index}
             exerciseData={value}
             updateExerciseDataObject={updateExerciseDataObject}
+            changeExercisePosition={changeExercisePosition}
             removeTraining={removeTraining}
+            exercisesNum={trainingFormsData.length}
+            position={getExercisePosition(value.id)}
           />
         ))}
       </Stack>
