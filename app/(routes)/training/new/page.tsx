@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
 import TrainingForm, {
+  ExerciseDataObject,
   IExerciseDataObject,
 } from "../../../_components/TrainingForm";
 import { v4 as uuidv4 } from "uuid";
@@ -41,12 +42,19 @@ export default function NewTraining(): JSX.Element {
   }
 
   function getNewExerciseDataObject(): IExerciseDataObject {
+    const exerciseDataObject: ExerciseDataObject = {
+      exercise1: "",
+      exercise2: "",
+    };
     return {
       id: uuidv4(),
       type: "",
-      name: { exercise1: "", exercise2: "" },
+      name: exerciseDataObject,
+      seriesNum: exerciseDataObject,
     };
   }
+
+  console.log(trainingFormsData);
 
   /**
    * 'no-explicit-any' is disabled on this function

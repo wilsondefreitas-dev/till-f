@@ -16,10 +16,11 @@ import { ChangeEvent } from "react";
 export interface IExerciseDataObject {
   id: string;
   type: string;
-  name: ExerciseName;
+  name: ExerciseDataObject;
+  seriesNum: ExerciseDataObject;
 }
 
-export type ExerciseName = {
+export type ExerciseDataObject = {
   exercise1: string;
   exercise2: string;
 };
@@ -59,6 +60,17 @@ export default function TrainingForm({
     updateExerciseDataObject(exerciseData.id, "name", {
       ...exerciseData.name,
       [`exercise${subExerciseNum}`]: name,
+    });
+  }
+
+  function handleSeriesNumberOnChange(
+    e: ChangeEvent,
+    subExerciseNum: number,
+  ): void {
+    const seriesNum: string = (e.target as HTMLInputElement).value;
+    updateExerciseDataObject(exerciseData.id, "seriesNum", {
+      ...exerciseData.seriesNum,
+      [`exercise${subExerciseNum}`]: seriesNum,
     });
   }
 
@@ -132,12 +144,11 @@ export default function TrainingForm({
                     value={exerciseData.name.exercise1}
                   />
 
-                  <TextField
-                    sx={{ flex: 1 }}
-                    id="nameInput"
-                    label="Número de Repetições"
-                    type="number"
-                    required
+                  <SeriesNumberInput
+                    handleSeriesNumberOnChange={(
+                      e: ChangeEvent<Element>,
+                    ): void => handleSeriesNumberOnChange(e, 1)}
+                    value={exerciseData.seriesNum.exercise1}
                   />
 
                   <RestInputsTitle />
@@ -187,12 +198,11 @@ export default function TrainingForm({
                     value={exerciseData.name.exercise2}
                   />
 
-                  <TextField
-                    sx={{ flex: 1 }}
-                    id="nameInput"
-                    label="Número de Series"
-                    type="number"
-                    required
+                  <SeriesNumberInput
+                    handleSeriesNumberOnChange={(
+                      e: ChangeEvent<Element>,
+                    ): void => handleSeriesNumberOnChange(e, 2)}
+                    value={exerciseData.seriesNum.exercise2}
                   />
 
                   <RestInputsTitle />
@@ -241,13 +251,11 @@ export default function TrainingForm({
                   value={exerciseData.name.exercise1}
                 />
 
-                <TextField
-                  sx={{ flex: 1 }}
-                  id="nameInput"
-                  label="Número de Series"
-                  type="number"
-                  inputProps={{ inputMode: "numeric" }}
-                  required
+                <SeriesNumberInput
+                  handleSeriesNumberOnChange={(e: ChangeEvent<Element>): void =>
+                    handleSeriesNumberOnChange(e, 1)
+                  }
+                  value={exerciseData.seriesNum.exercise1}
                 />
 
                 <RestInputsTitle />
@@ -321,6 +329,27 @@ const NameInput = ({
       value={value}
       required
       multiline
+    />
+  );
+};
+
+const SeriesNumberInput = ({
+  value,
+  handleSeriesNumberOnChange,
+}: {
+  value: string;
+  handleSeriesNumberOnChange: (e: ChangeEvent) => void;
+}): JSX.Element => {
+  return (
+    <TextField
+      sx={{ flex: 1 }}
+      id="seriesNumber"
+      label="Número de Series"
+      type="number"
+      inputProps={{ inputMode: "numeric" }}
+      onChange={handleSeriesNumberOnChange}
+      value={value}
+      required
     />
   );
 };
