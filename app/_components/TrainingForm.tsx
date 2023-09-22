@@ -16,12 +16,12 @@ import { ChangeEvent } from "react";
 export interface IExerciseDataObject {
   id: string;
   type: string;
-  name: ExerciseDataObject;
-  seriesNum: ExerciseDataObject;
-  restRange: ExerciseRangeDataObject;
+  name: ExerciseDataPattern;
+  seriesNum: ExerciseDataPattern;
+  restRange: ExerciseRangeDataPattern;
 }
 
-export type ExerciseRangeDataObject = {
+export type ExerciseRangeDataPattern = {
   exercise1: RangeObject;
   exercise2: RangeObject;
 };
@@ -31,7 +31,7 @@ export type RangeObject = {
   max: string;
 };
 
-export type ExerciseDataObject = {
+export type ExerciseDataPattern = {
   exercise1: string;
   exercise2: string;
 };
@@ -41,7 +41,7 @@ interface IProps {
   updateExerciseDataObject(
     id: string,
     key: keyof IExerciseDataObject,
-    value: string | ExerciseName,
+    value: string | ExerciseDataPattern | ExerciseRangeDataPattern,
   ): void;
   changeExercisePosition(id: string, to: number): void;
   removeTraining(id: string): void;
@@ -97,7 +97,9 @@ export default function TrainingForm({
     updateExerciseDataObject(exerciseData.id, "restRange", {
       ...exerciseData.restRange,
       [exerciseKey]: {
-        ...exerciseData.restRange[exerciseKey as keyof ExerciseRangeDataObject],
+        ...exerciseData.restRange[
+          exerciseKey as keyof ExerciseRangeDataPattern
+        ],
         [edge]: rangeNumValue,
       },
     });

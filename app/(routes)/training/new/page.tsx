@@ -4,8 +4,8 @@ import TextField from "@mui/material/TextField";
 import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
 import TrainingForm, {
-  ExerciseDataObject,
-  ExerciseRangeDataObject,
+  ExerciseDataPattern,
+  ExerciseRangeDataPattern,
   IExerciseDataObject,
   RangeObject,
 } from "../../../_components/TrainingForm";
@@ -44,7 +44,7 @@ export default function NewTraining(): JSX.Element {
   }
 
   function getNewExerciseDataObject(): IExerciseDataObject {
-    const exerciseDataObject: ExerciseDataObject = {
+    const exerciseDataPattern: ExerciseDataPattern = {
       exercise1: "",
       exercise2: "",
     };
@@ -52,16 +52,16 @@ export default function NewTraining(): JSX.Element {
       min: "",
       max: "",
     };
-    const exerciseRangeDataObject: ExerciseRangeDataObject = {
+    const exerciseRangeDataPattern: ExerciseRangeDataPattern = {
       exercise1: rangeObject,
       exercise2: rangeObject,
     };
     return {
       id: uuidv4(),
       type: "",
-      name: exerciseDataObject,
-      seriesNum: exerciseDataObject,
-      restRange: exerciseRangeDataObject,
+      name: exerciseDataPattern,
+      seriesNum: exerciseDataPattern,
+      restRange: exerciseRangeDataPattern,
     };
   }
 
@@ -70,7 +70,7 @@ export default function NewTraining(): JSX.Element {
   /**
    * 'no-explicit-any' is disabled on this function
    * because I want the possibility to set the
-   * attributes of ExerciseDataObject in a generic
+   * attributes of ExerciseDataPattern in a generic
    * way. To avoid this, I should create specific
    * functions to set the attributes based on their
    * type. At this POC moment, make no sense, since
