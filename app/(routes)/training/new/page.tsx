@@ -5,7 +5,9 @@ import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
 import TrainingForm, {
   ExerciseDataObject,
+  ExerciseRangeDataObject,
   IExerciseDataObject,
+  RangeObject,
 } from "../../../_components/TrainingForm";
 import { v4 as uuidv4 } from "uuid";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
@@ -46,11 +48,20 @@ export default function NewTraining(): JSX.Element {
       exercise1: "",
       exercise2: "",
     };
+    const rangeObject: RangeObject = {
+      min: "",
+      max: "",
+    };
+    const exerciseRangeDataObject: ExerciseRangeDataObject = {
+      exercise1: rangeObject,
+      exercise2: rangeObject,
+    };
     return {
       id: uuidv4(),
       type: "",
       name: exerciseDataObject,
       seriesNum: exerciseDataObject,
+      restRange: exerciseRangeDataObject,
     };
   }
 

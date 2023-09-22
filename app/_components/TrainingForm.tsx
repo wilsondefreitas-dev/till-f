@@ -18,7 +18,18 @@ export interface IExerciseDataObject {
   type: string;
   name: ExerciseDataObject;
   seriesNum: ExerciseDataObject;
+  restRange: ExerciseRangeDataObject;
 }
+
+export type ExerciseRangeDataObject = {
+  exercise1: RangeObject;
+  exercise2: RangeObject;
+};
+
+export type RangeObject = {
+  min: string;
+  max: string;
+};
 
 export type ExerciseDataObject = {
   exercise1: string;
@@ -56,10 +67,11 @@ export default function TrainingForm({
   }
 
   function handleNameOnChange(e: ChangeEvent, subExerciseNum: number): void {
-    const name: string = (e.target as HTMLInputElement).value;
+    const nameValue: string = (e.target as HTMLInputElement).value;
+    const exerciseKey: string = `exercise${subExerciseNum}`;
     updateExerciseDataObject(exerciseData.id, "name", {
       ...exerciseData.name,
-      [`exercise${subExerciseNum}`]: name,
+      [exerciseKey]: nameValue,
     });
   }
 
@@ -67,10 +79,27 @@ export default function TrainingForm({
     e: ChangeEvent,
     subExerciseNum: number,
   ): void {
-    const seriesNum: string = (e.target as HTMLInputElement).value;
+    const seriesNumValue: string = (e.target as HTMLInputElement).value;
+    const exerciseKey: string = `exercise${subExerciseNum}`;
     updateExerciseDataObject(exerciseData.id, "seriesNum", {
       ...exerciseData.seriesNum,
-      [`exercise${subExerciseNum}`]: seriesNum,
+      [exerciseKey]: seriesNumValue,
+    });
+  }
+
+  function handleRestRangeOnChange(
+    e: ChangeEvent,
+    subExerciseNum: number,
+    edge: string,
+  ): void {
+    const rangeNumValue: string = (e.target as HTMLInputElement).value;
+    const exerciseKey: string = `exercise${subExerciseNum}`;
+    updateExerciseDataObject(exerciseData.id, "restRange", {
+      ...exerciseData.restRange,
+      [exerciseKey]: {
+        ...exerciseData.restRange[exerciseKey as keyof ExerciseRangeDataObject],
+        [edge]: rangeNumValue,
+      },
     });
   }
 
@@ -153,21 +182,13 @@ export default function TrainingForm({
 
                   <RestInputsTitle />
 
-                  <Stack direction={"row"} spacing={"18px"}>
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Mín."
-                      type="number"
-                      required
-                    />
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Máx."
-                      type="number"
-                    />
-                  </Stack>
+                  <RestRangeInput
+                    handleRestRangeOnChange={(
+                      e: ChangeEvent<Element>,
+                      edge: string,
+                    ): void => handleRestRangeOnChange(e, 1, edge)}
+                    value={exerciseData.restRange.exercise1}
+                  />
 
                   <RepetitionInputsTitle />
 
@@ -207,21 +228,13 @@ export default function TrainingForm({
 
                   <RestInputsTitle />
 
-                  <Stack direction={"row"} spacing={"18px"}>
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Mín."
-                      type="number"
-                      required
-                    />
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Máx."
-                      type="number"
-                    />
-                  </Stack>
+                  <RestRangeInput
+                    handleRestRangeOnChange={(
+                      e: ChangeEvent<Element>,
+                      edge: string,
+                    ): void => handleRestRangeOnChange(e, 2, edge)}
+                    value={exerciseData.restRange.exercise2}
+                  />
 
                   <RepetitionInputsTitle />
 
@@ -260,23 +273,13 @@ export default function TrainingForm({
 
                 <RestInputsTitle />
 
-                <Stack direction={"row"} spacing={"18px"}>
-                  <TextField
-                    sx={{ flex: 1 }}
-                    id="nameInput"
-                    label="Mín."
-                    type="number"
-                    inputProps={{ inputMode: "numeric" }}
-                    required
-                  />
-                  <TextField
-                    sx={{ flex: 1 }}
-                    id="nameInput"
-                    label="Máx."
-                    type="number"
-                    inputProps={{ inputMode: "numeric" }}
-                  />
-                </Stack>
+                <RestRangeInput
+                  handleRestRangeOnChange={(
+                    e: ChangeEvent<Element>,
+                    edge: string,
+                  ): void => handleRestRangeOnChange(e, 1, edge)}
+                  value={exerciseData.restRange.exercise1}
+                />
 
                 <RepetitionInputsTitle />
 
@@ -351,6 +354,38 @@ const SeriesNumberInput = ({
       value={value}
       required
     />
+  );
+};
+
+const RestRangeInput = ({
+  value,
+  handleRestRangeOnChange,
+}: {
+  value: RangeObject;
+  handleRestRangeOnChange: (e: ChangeEvent, edge: string) => void;
+}): JSX.Element => {
+  return (
+    <Stack direction={"row"} spacing={"18px"}>
+      <TextField
+        sx={{ flex: 1 }}
+        id="restRangeMin"
+        label="Mín."
+        type="number"
+        value={value.min}
+        inputProps={{ inputMode: "numeric" }}
+        onChange={(e: ChangeEvent): void => handleRestRangeOnChange(e, "min")}
+        required
+      />
+      <TextField
+        sx={{ flex: 1 }}
+        id="restRangeMax"
+        label="Máx."
+        type="number"
+        value={value.max}
+        inputProps={{ inputMode: "numeric" }}
+        onChange={(e: ChangeEvent): void => handleRestRangeOnChange(e, "max")}
+      />
+    </Stack>
   );
 };
 
