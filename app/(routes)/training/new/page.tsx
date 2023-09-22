@@ -8,6 +8,8 @@ import TrainingForm, {
   ExerciseRangeDataPattern,
   IExerciseDataObject,
   RangeObject,
+  RepetitionObject,
+  RepetitionRangePattern,
 } from "../../../_components/TrainingForm";
 import { v4 as uuidv4 } from "uuid";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
@@ -52,16 +54,28 @@ export default function NewTraining(): JSX.Element {
       min: "",
       max: "",
     };
+    const repetitionObject: RepetitionObject = {
+      min: "",
+      max: "",
+      tillFail: false,
+    };
+
     const exerciseRangeDataPattern: ExerciseRangeDataPattern = {
       exercise1: rangeObject,
       exercise2: rangeObject,
     };
+    const repetitionDataPattern: RepetitionRangePattern = {
+      exercise1: repetitionObject,
+      exercise2: repetitionObject,
+    };
+
     return {
       id: uuidv4(),
       type: "",
       name: exerciseDataPattern,
       seriesNum: exerciseDataPattern,
       restRange: exerciseRangeDataPattern,
+      repetitionRange: repetitionDataPattern,
     };
   }
 

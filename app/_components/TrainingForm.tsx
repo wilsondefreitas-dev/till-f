@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import { styled, Theme } from "@mui/material/styles";
 import { ChangeEvent } from "react";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export interface IExerciseDataObject {
   id: string;
@@ -19,6 +21,7 @@ export interface IExerciseDataObject {
   name: ExerciseDataPattern;
   seriesNum: ExerciseDataPattern;
   restRange: ExerciseRangeDataPattern;
+  repetitionRange: RepetitionRangePattern;
 }
 
 export type ExerciseRangeDataPattern = {
@@ -26,10 +29,17 @@ export type ExerciseRangeDataPattern = {
   exercise2: RangeObject;
 };
 
+export type RepetitionRangePattern = {
+  exercise1: RepetitionObject;
+  exercise2: RepetitionObject;
+};
+
 export type RangeObject = {
   min: string;
   max: string;
 };
+
+export type RepetitionObject = RangeObject & { tillFail: boolean };
 
 export type ExerciseDataPattern = {
   exercise1: string;
@@ -41,7 +51,11 @@ interface IProps {
   updateExerciseDataObject(
     id: string,
     key: keyof IExerciseDataObject,
-    value: string | ExerciseDataPattern | ExerciseRangeDataPattern,
+    value:
+      | string
+      | ExerciseDataPattern
+      | ExerciseRangeDataPattern
+      | RepetitionRangePattern,
   ): void;
   changeExercisePosition(id: string, to: number): void;
   removeTraining(id: string): void;
@@ -69,6 +83,7 @@ export default function TrainingForm({
   function handleNameOnChange(e: ChangeEvent, subExerciseNum: number): void {
     const nameValue: string = (e.target as HTMLInputElement).value;
     const exerciseKey: string = `exercise${subExerciseNum}`;
+
     updateExerciseDataObject(exerciseData.id, "name", {
       ...exerciseData.name,
       [exerciseKey]: nameValue,
@@ -81,6 +96,7 @@ export default function TrainingForm({
   ): void {
     const seriesNumValue: string = (e.target as HTMLInputElement).value;
     const exerciseKey: string = `exercise${subExerciseNum}`;
+
     updateExerciseDataObject(exerciseData.id, "seriesNum", {
       ...exerciseData.seriesNum,
       [exerciseKey]: seriesNumValue,
@@ -94,6 +110,7 @@ export default function TrainingForm({
   ): void {
     const rangeNumValue: string = (e.target as HTMLInputElement).value;
     const exerciseKey: string = `exercise${subExerciseNum}`;
+
     updateExerciseDataObject(exerciseData.id, "restRange", {
       ...exerciseData.restRange,
       [exerciseKey]: {
@@ -103,6 +120,34 @@ export default function TrainingForm({
         [edge]: rangeNumValue,
       },
     });
+  }
+
+  function handleRepetitionOnChange(
+    e: ChangeEvent,
+    subExerciseNum: number,
+    edge: string,
+  ): void {
+    const inputElement: HTMLInputElement = e.target as HTMLInputElement;
+    const rangeNumValue: string | boolean = getInputValue(inputElement);
+    const exerciseKey: string = `exercise${subExerciseNum}`;
+
+    updateExerciseDataObject(exerciseData.id, "repetitionRange", {
+      ...exerciseData.repetitionRange,
+      [exerciseKey]: {
+        ...exerciseData.repetitionRange[
+          exerciseKey as keyof RepetitionRangePattern
+        ],
+        [edge]: rangeNumValue,
+      },
+    });
+
+    function getInputValue(inputElement: HTMLInputElement): string | boolean {
+      if (inputElement.type === "checkbox") {
+        return inputElement.checked;
+      } else {
+        return inputElement.value;
+      }
+    }
   }
 
   function handlePositionOnChange(e: SelectChangeEvent): void {
@@ -152,7 +197,7 @@ export default function TrainingForm({
           position={position}
           handlePositionOnChange={handlePositionOnChange}
         />
-        <span>{getTitle()}</span>
+        <Typography>{getTitle()}</Typography>
       </FormHeader>
 
       <Card>
@@ -194,21 +239,13 @@ export default function TrainingForm({
 
                   <RepetitionInputsTitle />
 
-                  <Stack direction={"row"} spacing={"18px"}>
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Mín."
-                      type="number"
-                      required
-                    />
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Máx."
-                      type="number"
-                    />
-                  </Stack>
+                  <RepetitionRangeInput
+                    handleRepetitionRangeOnChange={(
+                      e: ChangeEvent<Element>,
+                      edge: string,
+                    ): void => handleRepetitionOnChange(e, 1, edge)}
+                    value={exerciseData.repetitionRange.exercise1}
+                  />
                 </SubExercise>
 
                 <SubExercise>
@@ -240,21 +277,13 @@ export default function TrainingForm({
 
                   <RepetitionInputsTitle />
 
-                  <Stack direction={"row"} spacing={"18px"}>
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Mín."
-                      type="number"
-                      required
-                    />
-                    <TextField
-                      sx={{ flex: 1 }}
-                      id="nameInput"
-                      label="Máx."
-                      type="number"
-                    />
-                  </Stack>
+                  <RepetitionRangeInput
+                    handleRepetitionRangeOnChange={(
+                      e: ChangeEvent<Element>,
+                      edge: string,
+                    ): void => handleRepetitionOnChange(e, 2, edge)}
+                    value={exerciseData.repetitionRange.exercise2}
+                  />
                 </SubExercise>
               </>
             ) : (
@@ -285,23 +314,13 @@ export default function TrainingForm({
 
                 <RepetitionInputsTitle />
 
-                <Stack direction={"row"} spacing={"18px"}>
-                  <TextField
-                    sx={{ flex: 1 }}
-                    id="nameInput"
-                    label="Mín."
-                    type="number"
-                    inputProps={{ inputMode: "numeric" }}
-                    required
-                  />
-                  <TextField
-                    sx={{ flex: 1 }}
-                    id="nameInput"
-                    label="Máx."
-                    type="number"
-                    inputProps={{ inputMode: "numeric" }}
-                  />
-                </Stack>
+                <RepetitionRangeInput
+                  handleRepetitionRangeOnChange={(
+                    e: ChangeEvent<Element>,
+                    edge: string,
+                  ): void => handleRepetitionOnChange(e, 1, edge)}
+                  value={exerciseData.repetitionRange.exercise1}
+                />
               </>
             )}
           </Stack>
@@ -391,6 +410,55 @@ const RestRangeInput = ({
   );
 };
 
+const RepetitionRangeInput = ({
+  value,
+  handleRepetitionRangeOnChange,
+}: {
+  value: RepetitionObject;
+  handleRepetitionRangeOnChange: (e: ChangeEvent, edge: string) => void;
+}): JSX.Element => {
+  return (
+    <Stack direction={"row"} alignItems={"center"} spacing={"18px"}>
+      <TextField
+        sx={{ flex: 1 }}
+        id="repetitionRangeMin"
+        label="Mín."
+        type="number"
+        inputProps={{ inputMode: "numeric" }}
+        value={value.min}
+        onChange={(e: ChangeEvent): void =>
+          handleRepetitionRangeOnChange(e, "min")
+        }
+        required
+      />
+      <TextField
+        sx={{ flex: 1 }}
+        id="repetitionRangeMax"
+        label="Máx."
+        type="number"
+        inputProps={{ inputMode: "numeric" }}
+        value={value.max}
+        onChange={(e: ChangeEvent): void =>
+          handleRepetitionRangeOnChange(e, "max")
+        }
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            id={"repetitionRangeTillFail"}
+            checked={value.tillFail}
+            onChange={(e: ChangeEvent): void =>
+              handleRepetitionRangeOnChange(e, "tillFail")
+            }
+          />
+        }
+        label="Falha"
+        labelPlacement="top"
+      />
+    </Stack>
+  );
+};
+
 const TypeSelect = ({
   exerciseData,
   handleTypeOnChange,
@@ -454,17 +522,17 @@ const PositionSelect = ({
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
-const FormHeader = styled(Typography)(() => ({
+const FormHeader = styled("div")(() => ({
   position: "sticky",
   top: 48,
   padding: "14px 0",
   textAlign: "center",
   backgroundColor: "gainsboro",
   zIndex: 2,
-  fontWeight: "bold",
   display: "flex",
   justifyContent: "center",
   gap: "8px",
+  p: { fontWeight: "bold" },
   "& :first-letter": {
     textTransform: "uppercase",
   },
