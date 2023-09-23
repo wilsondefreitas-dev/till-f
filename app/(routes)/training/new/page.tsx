@@ -104,8 +104,26 @@ export default function NewTraining(): JSX.Element {
     if (aCopy[indexToUpdate][key] === undefined)
       throw new Error("Key was not found on trainingDataObject");
 
+    if (key === "type") {
+      const currentTypeIsBiset: boolean = aCopy[indexToUpdate][key] === "biset";
+      if (currentTypeIsBiset) {
+        aCopy[indexToUpdate] = getDataWithExercise2Reseted(
+          aCopy[indexToUpdate],
+        );
+      }
+    }
+
     aCopy[indexToUpdate][key] = value;
     setTrainingFormsData(aCopy);
+  }
+
+  function getDataWithExercise2Reseted(
+    data: IExerciseDataObject,
+  ): IExerciseDataObject {
+    data.name.exercise2 = "";
+    data.repetitionRange.exercise2 = { min: "", max: "", tillFail: false };
+
+    return data;
   }
 
   function handleNameOnChange(e: ChangeEvent): void {
