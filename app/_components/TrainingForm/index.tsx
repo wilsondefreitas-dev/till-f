@@ -103,6 +103,11 @@ function TrainingForm({
       },
     };
 
+    if (edge == "tillFail" && repetitionRangeValue === true) {
+      newRepetitionRangeObj[exerciseKey as keyof ExerciseRepetitionObject].max =
+        "";
+    }
+
     updateExerciseDataObject(
       exerciseData.id,
       "repetitionRange",
@@ -387,6 +392,7 @@ const RepetitionRangeInput = ({
           label="Máx."
           type="number"
           inputProps={{ inputMode: "numeric" }}
+          disabled={value.tillFail}
           value={value.max}
           onChange={(e: ChangeEvent): void =>
             handleRepetitionRangeOnChange(e, "max")
