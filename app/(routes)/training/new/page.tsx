@@ -1,30 +1,48 @@
 "use client";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useState,
+} from "react";
+import { v4 as uuidv4 } from "uuid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
-import TrainingForm, {
-  ExerciseDataPattern,
-  IExerciseDataObject,
+import TrainingForm from "../../../_components/TrainingForm";
+import {
+  ExerciseDataObject,
   RangeObject,
   RepetitionObject,
-  RepetitionRangePattern,
-} from "../../../_components/TrainingForm";
-import { v4 as uuidv4 } from "uuid";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+} from "_components/TrainingForm/_interfaces";
+
+//
 
 type TrainingDataState = [
-  IExerciseDataObject[],
-  Dispatch<SetStateAction<IExerciseDataObject[]>>,
+  ExerciseDataObject[],
+  Dispatch<SetStateAction<ExerciseDataObject[]>>,
 ];
 
 type ControlledInputState = [string, Dispatch<SetStateAction<string>>];
 
+//
+
 export default function NewTraining(): JSX.Element {
   const [name, setName]: ControlledInputState = useState<string>("");
   const [trainingFormsData, setTrainingFormsData]: TrainingDataState = useState<
-    IExerciseDataObject[]
+    ExerciseDataObject[]
   >([]);
+
+  const rangeObject: RangeObject = {
+    min: "",
+    max: "",
+  };
+  const repetitionObject: RepetitionObject = {
+    ...rangeObject,
+    tillFail: false,
+  };
 
   function handleAddExercise(): void {
     addNewExercise();
@@ -34,49 +52,38 @@ export default function NewTraining(): JSX.Element {
     setTrainingFormsData([...trainingFormsData, getNewExerciseDataObject()]);
   }
 
-  function removeTraining(id: string): void {
-    const aCopy: IExerciseDataObject[] = [...trainingFormsData];
-    const indexToDelete: number = aCopy.findIndex(
-      (data: IExerciseDataObject): boolean => data.id === id,
-    );
+  const removeTraining: (id: string) => void = useCallback(
+    (id: string): void => {
+      const aCopy: ExerciseDataObject[] = [...trainingFormsData];
+      const indexToDelete: number = aCopy.findIndex(
+        (data: ExerciseDataObject): boolean => data.id === id,
+      );
 
-    aCopy.splice(indexToDelete, 1);
-    setTrainingFormsData(aCopy);
-  }
+      aCopy.splice(indexToDelete, 1);
+      setTrainingFormsData(aCopy);
+    },
+    [trainingFormsData],
+  );
 
-  function getNewExerciseDataObject(): IExerciseDataObject {
-    const exerciseDataPattern: ExerciseDataPattern = {
-      exercise1: "",
-      exercise2: "",
-    };
-
-    const rangeObject: RangeObject = {
-      min: "",
-      max: "",
-    };
-
-    const repetitionObject: RepetitionObject = {
-      min: "",
-      max: "",
-      tillFail: false,
-    };
-
-    const repetitionDataPattern: RepetitionRangePattern = {
-      exercise1: repetitionObject,
-      exercise2: repetitionObject,
-    };
-
+  function getNewExerciseDataObject(): ExerciseDataObject {
     return {
       id: uuidv4(),
       type: "",
-      name: exerciseDataPattern,
       seriesNum: "",
-      restRange: rangeObject,
-      repetitionRange: repetitionDataPattern,
+      name: {
+        exercise1: "",
+        exercise2: "",
+      },
+      restRange: {
+        min: "",
+        max: "",
+      },
+      repetitionRange: {
+        exercise1: repetitionObject,
+        exercise2: repetitionObject,
+      },
     };
   }
-
-  console.log(trainingFormsData);
 
   /**
    * 'no-explicit-any' is disabled on this function
@@ -88,70 +95,85 @@ export default function NewTraining(): JSX.Element {
    * I'm still finding out the attributes types.
    */
 
-  function updateExerciseDataObject(
+  const updateExerciseDataObject: (
     id: string,
-    key: keyof IExerciseDataObject,
+    key: keyof ExerciseDataObject,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
-  ): void {
-    const aCopy: IExerciseDataObject[] = [...trainingFormsData];
-    const indexToUpdate: number = aCopy.findIndex(
-      (data: IExerciseDataObject): boolean => data.id === id,
-    );
+  ) => void = useCallback(
+    (
+      id: string,
+      key: keyof ExerciseDataObject,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      value: any,
+    ): void => {
+      const aCopy: ExerciseDataObject[] = [...trainingFormsData];
+      const indexToUpdate: number = aCopy.findIndex(
+        (data: ExerciseDataObject): boolean => data.id === id,
+      );
 
-    if (indexToUpdate === -1)
-      throw new Error("Data was not founded by ID on trainingDataObject");
-    if (aCopy[indexToUpdate][key] === undefined)
-      throw new Error("Key was not found on trainingDataObject");
+      if (indexToUpdate === -1)
+        throw new Error("Data was not founded by ID on trainingDataObject");
+      if (aCopy[indexToUpdate][key] === undefined)
+        throw new Error("Key was not found on trainingDataObject");
 
-    if (key === "type") {
-      const currentTypeIsBiset: boolean = aCopy[indexToUpdate][key] === "biset";
-      if (currentTypeIsBiset) {
-        aCopy[indexToUpdate] = getDataWithExercise2Reseted(
-          aCopy[indexToUpdate],
-        );
+      if (key === "type") {
+        const currentTypeIsBiset: boolean =
+          aCopy[indexToUpdate][key] === "biset";
+
+        if (currentTypeIsBiset) {
+          aCopy[indexToUpdate] = getDataWithExercise2Reseted(
+            aCopy[indexToUpdate],
+          );
+        }
       }
-    }
 
-    aCopy[indexToUpdate][key] = value;
-    setTrainingFormsData(aCopy);
-  }
+      aCopy[indexToUpdate][key] = value;
+      setTrainingFormsData(aCopy);
+    },
+    [trainingFormsData],
+  );
 
   function getDataWithExercise2Reseted(
-    data: IExerciseDataObject,
-  ): IExerciseDataObject {
+    data: ExerciseDataObject,
+  ): ExerciseDataObject {
     data.name.exercise2 = "";
-    data.repetitionRange.exercise2 = { min: "", max: "", tillFail: false };
+    data.repetitionRange.exercise2 = repetitionObject;
 
     return data;
   }
 
-  function handleNameOnChange(e: ChangeEvent): void {
+  function handleTrainingNameOnChange(e: ChangeEvent): void {
     const el: HTMLInputElement = e.target as HTMLInputElement;
+
     setName(el.value);
   }
 
-  function changeExercisePosition(id: string, to: number): void {
-    const aCopy: IExerciseDataObject[] = [...trainingFormsData];
-    const exerciseToSwapPosition: number = getExercisePosition(id);
-    const exerciseToSwap: IExerciseDataObject = aCopy[exerciseToSwapPosition];
+  const changeExercisePosition: (id: string, to: number) => void = useCallback(
+    (id: string, to: number): void => {
+      const aCopy: ExerciseDataObject[] = [...trainingFormsData];
+      const exerciseToSwapPosition: number = getExercisePosition(id);
+      const exerciseToSwap: ExerciseDataObject = aCopy[exerciseToSwapPosition];
 
-    aCopy[exerciseToSwapPosition] = aCopy[to];
-    aCopy[to] = exerciseToSwap;
+      aCopy[exerciseToSwapPosition] = aCopy[to];
+      aCopy[to] = exerciseToSwap;
 
-    setTrainingFormsData(aCopy);
-  }
+      setTrainingFormsData(aCopy);
+    },
+    [trainingFormsData],
+  );
 
   function getExercisePosition(id: string): number {
-    const exercise: IExerciseDataObject | undefined = trainingFormsData.find(
-      (exercise: IExerciseDataObject) => exercise.id === id,
+    const exercise: ExerciseDataObject | undefined = trainingFormsData.find(
+      (exercise: ExerciseDataObject) => exercise.id === id,
     );
 
     if (!exercise) throw new Error("Exercise not found in trainingFormsData");
 
-    const position: number = trainingFormsData.indexOf(exercise);
-    return position;
+    return trainingFormsData.indexOf(exercise);
   }
+
+  console.log(trainingFormsData);
 
   return (
     <>
@@ -162,12 +184,12 @@ export default function NewTraining(): JSX.Element {
           variant="standard"
           label="Nome"
           value={name}
-          onChange={handleNameOnChange}
+          onChange={handleTrainingNameOnChange}
           required
           multiline
         />
 
-        {trainingFormsData.map((value: IExerciseDataObject, index: number) => (
+        {trainingFormsData.map((value: ExerciseDataObject, index: number) => (
           <TrainingForm
             key={index}
             exerciseData={value}

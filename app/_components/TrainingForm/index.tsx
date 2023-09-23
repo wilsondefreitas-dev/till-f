@@ -1,3 +1,4 @@
+import { ChangeEvent, memo } from "react";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,78 +12,45 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import { styled, Theme } from "@mui/material/styles";
-import { ChangeEvent } from "react";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+  ExerciseDataObject,
+  ExerciseNameObject,
+  RangeObject,
+  ExerciseRepetitionObject,
+  RepetitionObject,
+} from "./_interfaces";
 
 //
 
-export interface IExerciseDataObject {
-  id: string;
-  type: string;
-  name: ExerciseDataPattern;
-  seriesNum: string;
-  restRange: RangeObject;
-  repetitionRange: RepetitionRangePattern;
-}
-
-export type RepetitionRangePattern = {
-  exercise1: RepetitionObject;
-  exercise2: RepetitionObject;
-};
-
-export type RangeObject = {
-  min: string;
-  max: string;
-};
-
-export type RepetitionObject = RangeObject & { tillFail: boolean };
-
-export type ExerciseDataPattern = {
-  exercise1: string;
-  exercise2: string;
-};
-
-//
-
-interface IProps {
-  exerciseData: IExerciseDataObject;
-  updateExerciseDataObject(
-    id: string,
-    key: keyof IExerciseDataObject,
-    value: string | ExerciseDataPattern | RangeObject | RepetitionRangePattern,
-  ): void;
-  changeExercisePosition(id: string, to: number): void;
-  removeTraining(id: string): void;
+interface Props {
+  exerciseData: ExerciseDataObject;
   exercisesNum: number;
   position: number;
+  removeTraining(id: string): void;
+  changeExercisePosition(id: string, to: number): void;
+  updateExerciseDataObject(
+    id: string,
+    key: keyof ExerciseDataObject,
+    value: string | ExerciseNameObject | RangeObject | ExerciseRepetitionObject,
+  ): void;
 }
 
-export default function TrainingForm({
+//
+
+function TrainingForm({
   exerciseData,
-  updateExerciseDataObject,
-  changeExercisePosition,
-  removeTraining,
   exercisesNum,
   position,
-}: IProps): JSX.Element {
+  removeTraining,
+  changeExercisePosition,
+  updateExerciseDataObject,
+}: Props): JSX.Element {
   function handleTypeOnChange(e: SelectChangeEvent): void {
     const type: string = e.target.value;
+
     updateExerciseDataObject(exerciseData.id, "type", type);
-  }
-
-  function handleDeleteOnClick(): void {
-    removeTraining(exerciseData.id);
-  }
-
-  function handleNameOnChange(e: ChangeEvent, subExerciseNum: number): void {
-    const nameValue: string = (e.target as HTMLInputElement).value;
-    const exerciseKey: string = `exercise${subExerciseNum}`;
-
-    updateExerciseDataObject(exerciseData.id, "name", {
-      ...exerciseData.name,
-      [exerciseKey]: nameValue,
-    });
   }
 
   function handleSeriesNumberOnChange(e: ChangeEvent): void {
@@ -91,13 +59,27 @@ export default function TrainingForm({
     updateExerciseDataObject(exerciseData.id, "seriesNum", seriesNumValue);
   }
 
+  function handleNameOnChange(e: ChangeEvent, subExerciseNum: number): void {
+    const nameValue: string = (e.target as HTMLInputElement).value;
+    const exerciseKey: string = `exercise${subExerciseNum}`;
+
+    const newNameObj: ExerciseNameObject = {
+      ...exerciseData.name,
+      [exerciseKey]: nameValue,
+    };
+
+    updateExerciseDataObject(exerciseData.id, "name", newNameObj);
+  }
+
   function handleRestRangeOnChange(e: ChangeEvent, edge: string): void {
     const rangeNumValue: string = (e.target as HTMLInputElement).value;
 
-    updateExerciseDataObject(exerciseData.id, "restRange", {
+    const newRangeNumObj: RangeObject = {
       ...exerciseData.restRange,
       [edge]: rangeNumValue,
-    });
+    };
+
+    updateExerciseDataObject(exerciseData.id, "restRange", newRangeNumObj);
   }
 
   function handleRepetitionOnChange(
@@ -106,18 +88,26 @@ export default function TrainingForm({
     edge: string,
   ): void {
     const inputElement: HTMLInputElement = e.target as HTMLInputElement;
-    const rangeNumValue: string | boolean = getInputValue(inputElement);
+    const repetitionRangeValue: string | boolean = getInputValue(inputElement);
     const exerciseKey: string = `exercise${subExerciseNum}`;
+    const exerciseCurrentValue: RepetitionObject =
+      exerciseData.repetitionRange[
+        exerciseKey as keyof ExerciseRepetitionObject
+      ];
 
-    updateExerciseDataObject(exerciseData.id, "repetitionRange", {
+    const newRepetitionRangeObj: ExerciseRepetitionObject = {
       ...exerciseData.repetitionRange,
       [exerciseKey]: {
-        ...exerciseData.repetitionRange[
-          exerciseKey as keyof RepetitionRangePattern
-        ],
-        [edge]: rangeNumValue,
+        ...exerciseCurrentValue,
+        [edge]: repetitionRangeValue,
       },
-    });
+    };
+
+    updateExerciseDataObject(
+      exerciseData.id,
+      "repetitionRange",
+      newRepetitionRangeObj,
+    );
 
     function getInputValue(inputElement: HTMLInputElement): string | boolean {
       if (inputElement.type === "checkbox") {
@@ -126,6 +116,10 @@ export default function TrainingForm({
         return inputElement.value;
       }
     }
+  }
+
+  function handleDeleteOnClick(): void {
+    removeTraining(exerciseData.id);
   }
 
   return (
@@ -230,6 +224,8 @@ export default function TrainingForm({
   );
 }
 
+export default memo(TrainingForm);
+
 //
 
 const FormHeader = ({
@@ -240,10 +236,10 @@ const FormHeader = ({
 }: {
   exercisesNum: number;
   position: number;
-  exerciseData: IExerciseDataObject;
+  exerciseData: ExerciseDataObject;
   changeExercisePosition: (id: string, to: number) => void;
 }): JSX.Element => {
-  const { name, id, type }: IExerciseDataObject = exerciseData;
+  const { name, id, type }: ExerciseDataObject = exerciseData;
 
   function handlePositionOnChange(e: SelectChangeEvent): void {
     const to: number = parseInt(e.target.value) - 1;
@@ -439,7 +435,7 @@ const TypeSelect = ({
   exerciseData,
   handleTypeOnChange,
 }: {
-  exerciseData: IExerciseDataObject;
+  exerciseData: ExerciseDataObject;
   handleTypeOnChange: (e: SelectChangeEvent) => void;
 }): JSX.Element => {
   return (
@@ -535,5 +531,5 @@ const SubExercise = styled("fieldset")(() => ({
 // eslint-disable-next-line @typescript-eslint/typedef
 const PositionFormControl = styled(FormControl)(() => ({
   "& .MuiInputBase-root": { marginTop: "0" },
-  "& .MuiSelect-select": { padding: "0 28px 0 10px" },
+  "& .MuiSelect-select": { padding: "0 28px 0 10px", fontWeight: "bold" },
 }));
