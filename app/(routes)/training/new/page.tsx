@@ -5,7 +5,6 @@ import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
 import TrainingForm, {
   ExerciseDataPattern,
-  ExerciseRangeDataPattern,
   IExerciseDataObject,
   RangeObject,
   RepetitionObject,
@@ -50,20 +49,18 @@ export default function NewTraining(): JSX.Element {
       exercise1: "",
       exercise2: "",
     };
+
     const rangeObject: RangeObject = {
       min: "",
       max: "",
     };
+
     const repetitionObject: RepetitionObject = {
       min: "",
       max: "",
       tillFail: false,
     };
 
-    const exerciseRangeDataPattern: ExerciseRangeDataPattern = {
-      exercise1: rangeObject,
-      exercise2: rangeObject,
-    };
     const repetitionDataPattern: RepetitionRangePattern = {
       exercise1: repetitionObject,
       exercise2: repetitionObject,
@@ -73,8 +70,8 @@ export default function NewTraining(): JSX.Element {
       id: uuidv4(),
       type: "",
       name: exerciseDataPattern,
-      seriesNum: exerciseDataPattern,
-      restRange: exerciseRangeDataPattern,
+      seriesNum: "",
+      restRange: rangeObject,
       repetitionRange: repetitionDataPattern,
     };
   }
