@@ -45,7 +45,7 @@ interface SubExercise {
 
 //
 
-function TrainingForm({
+function ExerciseForm({
   exerciseData,
   exercisesNum,
   position,
@@ -230,7 +230,7 @@ function TrainingForm({
   );
 }
 
-export default memo(TrainingForm);
+export default memo(ExerciseForm);
 
 // eslint-disable-next-line @typescript-eslint/typedef
 const SubExercise = styled("fieldset")(() => ({

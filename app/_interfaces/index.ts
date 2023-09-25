@@ -1,3 +1,8 @@
+export interface TrainingDataObject {
+  name: string;
+  exercises: ExerciseDataObject[];
+}
+
 export interface ExerciseDataObject {
   id: string;
   type: string;
