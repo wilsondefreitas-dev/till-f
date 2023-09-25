@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
-import TrainingForm from "../../../_components/TrainingForm";
+import TrainingForm from "../../../_components/ExerciseForm";
 import { ExerciseDataObject, RangeObject, RepetitionObject } from "_interfaces";
 
 //
