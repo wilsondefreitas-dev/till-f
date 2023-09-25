@@ -25,3 +25,5 @@ export interface ExerciseNameObject {
   exercise1: string;
   exercise2: string;
 }
+
+export type ExerciseTypeOption = { label: string; value: string };

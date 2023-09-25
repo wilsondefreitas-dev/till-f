@@ -12,11 +12,7 @@ import TextField from "@mui/material/TextField";
 import MainHeader from "_components/MainHeader";
 import LongButton from "_components/LongButton";
 import TrainingForm from "../../../_components/TrainingForm";
-import {
-  ExerciseDataObject,
-  RangeObject,
-  RepetitionObject,
-} from "_components/TrainingForm/_interfaces";
+import { ExerciseDataObject, RangeObject, RepetitionObject } from "_interfaces";
 
 //
 
