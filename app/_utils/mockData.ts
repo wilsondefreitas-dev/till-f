@@ -42,8 +42,8 @@ export const trainingMock: TrainingDataObject = {
       },
       repetitionRange: {
         exercise1: {
-          min: "",
-          max: "",
+          min: "6",
+          max: "12",
           tillFail: true,
         },
         exercise2: {
@@ -67,8 +67,8 @@ export const trainingMock: TrainingDataObject = {
       },
       repetitionRange: {
         exercise1: {
-          min: "",
-          max: "",
+          min: "6",
+          max: "15",
           tillFail: true,
         },
         exercise2: {

@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
+import SubHeader from "_components/SubHeader";
 
 //
 
@@ -53,14 +54,14 @@ export default function FormHeader({
     return `${getTypeLabel()} ${exerciseName}`;
   }
   return (
-    <FormHeaderContainer>
+    <SubHeader>
       <PositionSelect
         exercisesNum={exercisesNum}
         position={position}
         handlePositionOnChange={handlePositionOnChange}
       />
       <Typography>{getTitle()}</Typography>
-    </FormHeaderContainer>
+    </SubHeader>
   );
 }
 
@@ -101,21 +102,6 @@ const PositionSelect = ({
     </PositionFormControl>
   );
 };
-
-// eslint-disable-next-line @typescript-eslint/typedef
-const FormHeaderContainer = styled("div")(() => ({
-  position: "sticky",
-  top: 48,
-  padding: "14px 0",
-  textAlign: "center",
-  backgroundColor: "gainsboro",
-  zIndex: 2,
-  display: "flex",
-  justifyContent: "center",
-  gap: "8px",
-  textTransform: "capitalize",
-  "& p": { fontWeight: "bold" },
-}));
 
 // eslint-disable-next-line @typescript-eslint/typedef
 const PositionFormControl = styled(FormControl)(() => ({
