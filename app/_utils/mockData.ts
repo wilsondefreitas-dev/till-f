@@ -31,7 +31,7 @@ export const trainingMock: TrainingDataObject = {
     {
       id: "f2d02248-a15f-41db-950f-3d62d20f3a37",
       type: "biset",
-      seriesNum: "2",
+      seriesNum: "4",
       name: {
         exercise1: "Exercicio 2A",
         exercise2: "Exercicio 2B",
@@ -53,30 +53,91 @@ export const trainingMock: TrainingDataObject = {
         },
       },
     },
+  ],
+};
+
+export interface Historic {
+  exercises: ExerciseHistoric[];
+}
+
+export interface ExerciseHistoric {
+  id: string;
+  series: SeriesHistoric[];
+}
+
+interface SeriesHistoric {
+  exercise_1: SerieHistoric;
+  exercise_2?: SerieHistoric;
+}
+
+interface SerieHistoric {
+  repetitions: number;
+  weight: number;
+}
+
+export const historicMock: Historic = {
+  exercises: [
     {
-      id: "f2d02248-a15f-41db-950f-3d62d50f3a37",
-      type: "biset",
-      seriesNum: "3",
-      name: {
-        exercise1: "Exercicio 2A",
-        exercise2: "Exercicio 2B",
-      },
-      restRange: {
-        min: "3",
-        max: "4",
-      },
-      repetitionRange: {
-        exercise1: {
-          min: "6",
-          max: "15",
-          tillFail: true,
+      id: "5fbb9a58-2db0-4a62-b76f-7493e029e085",
+      series: [
+        {
+          exercise_1: {
+            repetitions: 8,
+            weight: 15,
+          },
         },
-        exercise2: {
-          min: "1",
-          max: "2",
-          tillFail: false,
+        {
+          exercise_1: {
+            repetitions: 9,
+            weight: 17,
+          },
         },
-      },
+      ],
+    },
+    {
+      id: "f2d02248-a15f-41db-950f-3d62d20f3a37",
+      series: [
+        {
+          exercise_1: {
+            repetitions: 8,
+            weight: 15,
+          },
+          exercise_2: {
+            repetitions: 6,
+            weight: 17,
+          },
+        },
+        {
+          exercise_1: {
+            repetitions: 3,
+            weight: 11,
+          },
+          exercise_2: {
+            repetitions: 7,
+            weight: 9,
+          },
+        },
+        {
+          exercise_1: {
+            repetitions: 8,
+            weight: 15,
+          },
+          exercise_2: {
+            repetitions: 6,
+            weight: 17,
+          },
+        },
+        {
+          exercise_1: {
+            repetitions: 3,
+            weight: 11,
+          },
+          exercise_2: {
+            repetitions: 7,
+            weight: 9,
+          },
+        },
+      ],
     },
   ],
 };

@@ -14,15 +14,15 @@ import {
   RangeObject,
   ExerciseRepetitionObject,
   RepetitionObject,
-} from "../../_interfaces";
-import FormHeader from "./_components/FormHeader";
+} from "../../../_interfaces";
+import FormHeader from "./FormHeader";
 import {
   NameInput,
   RepetitionRangeInput,
   RestRangeInput,
   SeriesNumberInput,
   TypeSelect,
-} from "./_components/Inputs";
+} from "./Inputs";
 
 //
 

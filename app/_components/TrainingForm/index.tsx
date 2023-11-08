@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import LongButton from "_components/LongButton";
-import ExerciseForm from "./ExerciseForm";
+import ExerciseForm from "./_components/ExerciseForm";
 import {
   ExerciseDataObject,
   RangeObject,
