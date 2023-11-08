@@ -179,8 +179,6 @@ export default function TrainingForm({ data }: Props): JSX.Element {
     return trainingFormsData.indexOf(exercise);
   }
 
-  console.log(trainingFormsData);
-
   return (
     <>
       <Stack>

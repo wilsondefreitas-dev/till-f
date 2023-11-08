@@ -12,7 +12,7 @@ export default function WorkoutForm({
 }): JSX.Element {
   return (
     <>
-      <WorkoutHeader />
+      <WorkoutHeader name={trainingData.name} />
       {trainingData.exercises.map((exercise: ExerciseDataObject) => {
         return (
           <ExerciseTable

@@ -9,7 +9,7 @@ export default function NewWorkout(): JSX.Element {
     <>
       <MainHeader>treinar</MainHeader>
       <WorkoutForm trainingData={trainingMock} />
-      <LongButton>Finalizar</LongButton>
+      <LongButton>Salvar</LongButton>
     </>
   );
 }

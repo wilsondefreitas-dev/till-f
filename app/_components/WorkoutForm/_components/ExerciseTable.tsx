@@ -23,8 +23,7 @@ import {
   ExerciseTypeOption,
   RangeObject,
 } from "_interfaces";
-import { Historic } from "_utils/mockData";
-// import { ExerciseHistoric, Historic } from "_utils/mockData";
+import { ExerciseHistoric, Historic } from "_utils/mockData";
 
 export default function ExerciseTable({
   data,
@@ -106,7 +105,9 @@ function TableHeader({ data }: { data: ExerciseDataObject }): JSX.Element {
         <TableHeaderCell>#</TableHeaderCell>
         <TableHeaderCell>
           <RepeatIcon fontSize="inherit" />
-          {`Reps. (${data.repetitionRange.exercise1.min} ~ ${data.repetitionRange.exercise1.max})`}
+          {data.type === "biset"
+            ? `Reps. (A: ${data.repetitionRange.exercise1.min} ~ ${data.repetitionRange.exercise1.max} | B: ${data.repetitionRange.exercise2.min} ~ ${data.repetitionRange.exercise2.max})`
+            : `Reps. (${data.repetitionRange.exercise1.min} ~ ${data.repetitionRange.exercise1.max})`}
         </TableHeaderCell>
         <TableHeaderCell>
           <FitnessCenterIcon fontSize="inherit" /> Carga
@@ -134,15 +135,17 @@ function TableContent({
   data: ExerciseDataObject;
   historic?: Historic;
 }): JSX.Element {
-  console.log(historic);
+  const curHistoric: ExerciseHistoric | undefined = getExerciseHistoric(
+    data.id,
+  );
 
-  // function getExerciseHistoric(
-  //   exerciseID: string,
-  // ): ExerciseHistoric | undefined {
-  //   return historic?.exercises.find(
-  //     (exercise: ExerciseHistoric) => exercise.id === exerciseID,
-  //   );
-  // }
+  function getExerciseHistoric(
+    exerciseID: string,
+  ): ExerciseHistoric | undefined {
+    return historic?.exercises.find(
+      (exercise: ExerciseHistoric) => exercise.id === exerciseID,
+    );
+  }
 
   return (
     <TableBody>
@@ -157,7 +160,7 @@ function TableContent({
                 }}
               >
                 <SerieCell rowSpan={data.type == "biset" ? 2 : 1}>
-                  <b>{index}</b>
+                  <b>{index + 1}</b>
                 </SerieCell>
                 <DataCell>
                   <div>
@@ -165,6 +168,12 @@ function TableContent({
                     <OutlinedInput
                       size="small"
                       type="number"
+                      disabled={Boolean(curHistoric)}
+                      value={
+                        curHistoric
+                          ? curHistoric.series[index].exercise_1.repetitions
+                          : null
+                      }
                       inputProps={{ inputMode: "numeric" }}
                       endAdornment={
                         <InputAdornment position="end">x</InputAdornment>
@@ -178,6 +187,12 @@ function TableContent({
                     <OutlinedInput
                       size="small"
                       type="number"
+                      disabled={Boolean(curHistoric)}
+                      value={
+                        curHistoric
+                          ? curHistoric.series[index].exercise_1.weight
+                          : null
+                      }
                       inputProps={{ inputMode: "numeric" }}
                       endAdornment={
                         <InputAdornment position="end">Kg</InputAdornment>
@@ -200,6 +215,12 @@ function TableContent({
                       <OutlinedInput
                         size="small"
                         type="number"
+                        disabled={Boolean(curHistoric)}
+                        value={
+                          curHistoric
+                            ? curHistoric.series[index].exercise_2?.repetitions
+                            : null
+                        }
                         inputProps={{ inputMode: "numeric" }}
                         endAdornment={
                           <InputAdornment position="end">x</InputAdornment>
@@ -213,6 +234,12 @@ function TableContent({
                       <OutlinedInput
                         size="small"
                         type="number"
+                        disabled={Boolean(curHistoric)}
+                        value={
+                          curHistoric
+                            ? curHistoric.series[index].exercise_2?.weight
+                            : null
+                        }
                         inputProps={{ inputMode: "numeric" }}
                         endAdornment={
                           <InputAdornment position="end">Kg</InputAdornment>
