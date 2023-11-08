@@ -56,6 +56,12 @@ export const trainingMock: TrainingDataObject = {
   ],
 };
 
+export const trainingListMock: Array<TrainingDataObject> = [
+  trainingMock,
+  trainingMock,
+  trainingMock,
+];
+
 export interface Historic {
   exercises: ExerciseHistoric[];
 }
