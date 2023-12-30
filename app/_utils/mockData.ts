@@ -1,4 +1,4 @@
-import { TrainingDataObject } from "_interfaces";
+import { Historic, TrainingDataObject } from "_interfaces";
 
 export const trainingMock: TrainingDataObject = {
   name: "Treino Teste",
@@ -62,29 +62,11 @@ export const trainingListMock: Array<TrainingDataObject> = [
   trainingMock,
 ];
 
-export interface Historic {
-  exercises: ExerciseHistoric[];
-}
-
-export interface ExerciseHistoric {
-  id: string;
-  series: SeriesHistoric[];
-}
-
-interface SeriesHistoric {
-  exercise_1: SerieHistoric;
-  exercise_2?: SerieHistoric;
-}
-
-interface SerieHistoric {
-  repetitions: number;
-  weight: number;
-}
-
 export const historicMock: Historic = {
   exercises: [
     {
       id: "5fbb9a58-2db0-4a62-b76f-7493e029e085",
+      comment: "Feeling something...",
       series: [
         {
           exercise_1: {
@@ -102,6 +84,7 @@ export const historicMock: Historic = {
     },
     {
       id: "f2d02248-a15f-41db-950f-3d62d20f3a37",
+      comment: "Feeling something else...",
       series: [
         {
           exercise_1: {

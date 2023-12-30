@@ -32,3 +32,23 @@ export interface ExerciseNameObject {
 }
 
 export type ExerciseTypeOption = { label: string; value: string };
+
+export interface Historic {
+  exercises: ExerciseHistoric[];
+}
+
+export interface ExerciseHistoric {
+  id: string;
+  series: SeriesHistoric[];
+  comment: string;
+}
+
+export interface SeriesHistoric {
+  exercise_1: SerieHistoric;
+  exercise_2?: SerieHistoric;
+}
+
+export interface SerieHistoric {
+  repetitions: number;
+  weight: number;
+}
