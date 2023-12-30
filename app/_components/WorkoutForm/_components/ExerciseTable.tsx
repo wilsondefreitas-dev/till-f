@@ -22,8 +22,9 @@ import {
   ExerciseNameObject,
   ExerciseTypeOption,
   RangeObject,
+  Historic,
+  ExerciseHistoric,
 } from "_interfaces";
-import { ExerciseHistoric, Historic } from "_utils/mockData";
 
 export default function ExerciseTable({
   data,
@@ -32,6 +33,15 @@ export default function ExerciseTable({
   data: ExerciseDataObject;
   historicMock?: Historic;
 }): JSX.Element {
+  function getComment(): string | undefined {
+    const curExercise: ExerciseHistoric | undefined =
+      historicMock?.exercises.find(
+        (exercise: ExerciseHistoric) => exercise.id === data.id,
+      );
+
+    return curExercise?.comment;
+  }
+
   return (
     <Stack spacing={1}>
       <Divider />
@@ -46,7 +56,12 @@ export default function ExerciseTable({
         <TableContent data={data} historic={historicMock} />
       </TableContainer>
 
-      <TextField placeholder="Observação" multiline />
+      <TextField
+        placeholder={"Observação"}
+        defaultValue={getComment()}
+        disabled={Boolean(getComment())}
+        multiline
+      />
     </Stack>
   );
 }
@@ -81,23 +96,6 @@ function TableTitle({ data }: { data: ExerciseDataObject }): JSX.Element {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/typedef
-const TableTitleContainer = styled(Stack)(() => ({
-  fontSize: 15,
-  textAlign: "center",
-  "& svg": {
-    position: "relative",
-    top: 2,
-    marginRight: 1,
-  },
-  "& .MuiTypography-root:first-of-type": {
-    fontSize: 12,
-  },
-  "& .MuiTypography-root:last-child": {
-    fontWeight: "bold",
-  },
-}));
-
 function TableHeader({ data }: { data: ExerciseDataObject }): JSX.Element {
   return (
     <TableHead>
@@ -116,17 +114,6 @@ function TableHeader({ data }: { data: ExerciseDataObject }): JSX.Element {
     </TableHead>
   );
 }
-
-// eslint-disable-next-line @typescript-eslint/typedef
-const TableHeaderCell = styled(TableCell)(({ theme }: { theme: Theme }) => ({
-  backgroundColor: theme.palette.info.main,
-  color: "white",
-  "& svg": {
-    position: "relative",
-    top: 3,
-    marginRight: 1,
-  },
-}));
 
 function TableContent({
   data,
@@ -257,6 +244,34 @@ function TableContent({
     </TableBody>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/typedef
+const TableTitleContainer = styled(Stack)(() => ({
+  fontSize: 15,
+  textAlign: "center",
+  "& svg": {
+    position: "relative",
+    top: 2,
+    marginRight: 1,
+  },
+  "& .MuiTypography-root:first-of-type": {
+    fontSize: 12,
+  },
+  "& .MuiTypography-root:last-child": {
+    fontWeight: "bold",
+  },
+}));
+
+// eslint-disable-next-line @typescript-eslint/typedef
+const TableHeaderCell = styled(TableCell)(({ theme }: { theme: Theme }) => ({
+  backgroundColor: theme.palette.info.main,
+  color: "white",
+  "& svg": {
+    position: "relative",
+    top: 3,
+    marginRight: 1,
+  },
+}));
 
 // eslint-disable-next-line @typescript-eslint/typedef
 const DataCell = styled(TableCell)(() => ({
