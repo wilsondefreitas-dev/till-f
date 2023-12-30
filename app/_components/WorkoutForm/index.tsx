@@ -1,7 +1,6 @@
 import ExerciseTable from "_components/WorkoutForm/_components/ExerciseTable";
 import WorkoutHeader from "_components/WorkoutForm/_components/WorkoutHeader";
-import { ExerciseDataObject, TrainingDataObject } from "_interfaces";
-import { Historic } from "_utils/mockData";
+import { ExerciseDataObject, TrainingDataObject, Historic } from "_interfaces";
 
 export default function WorkoutForm({
   trainingData,
